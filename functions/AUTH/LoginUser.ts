@@ -1,16 +1,19 @@
-import { APIURL } from '@/utils/SignupInterface'
+import { APIURL, UserData } from '@/utils/SignupInterface'
 import axios from 'axios'
 import { showCustomToast } from '../CustomToast'
 import toast from 'react-hot-toast'
 
-export const LoginUser = async (Inputvalue: any) => {
+export const LoginUser = async (Inputvalue: any): Promise<UserData | void> => {
   const { email, password } = Inputvalue
 
   try {
-    const Response = await axios.post(`${APIURL}/api/Users/Login`, {
-      email,
-      password,
-    })
+    const Response = await axios.post<UserData>(
+      `http://localhost:8000/api/Auth/Login`,
+      {
+        email,
+        password,
+      }
+    )
 
     if (Response.status === 200) {
       // API responded successfully with user data
