@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Loader from '@/components/Loader'
 import { Quiz } from '@/utils/BlogInterface'
 import { UserContext } from '@/utils/Context'
-import { FaRegSadTear } from 'react-icons/fa'
+import { FaRegFrown, FaRegSadTear } from 'react-icons/fa'
 import { fetchAllAiQuiz } from '@/functions/Quiz/GettingALLQuiz'
 import DisplayCard from '@/components/Quiz/DisplayCard'
 import Image from 'next/image'
@@ -29,9 +29,11 @@ export default function Home() {
   }, [])
   if (QuizData.length === 0) {
     return (
-      <div className="flex flex-col items-start justify-start  min-h-screen">
-        <FaRegSadTear className="text-6xl text-gray-400" />
-        <p className="text-lg text-gray-600">No Quizez Created available.</p>
+      <div className="flex flex-col justify-center mx-auto  items-center mt-20  ">
+        <FaRegFrown size={100} className="text-4xl text-gray-500 mb-4" />
+        <p className="text-center text-lg md:text-4xl text-gray-500">
+          No Quizzes created yet.
+        </p>
       </div>
     )
   }
