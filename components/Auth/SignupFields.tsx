@@ -28,7 +28,7 @@ const SignUpTextFields = () => {
         name="Name"
         value={inputVal.Name}
         onChange={handleChange}
-        className="mb-3 p-3 rounded-lg bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="mb-3 p-2 rounded-lg text-xs bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="email"
@@ -36,7 +36,7 @@ const SignUpTextFields = () => {
         name="email"
         value={inputVal.email}
         onChange={handleChange}
-        className="mb-3 p-3 rounded-lg bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="mb-3 p-2 text-xs rounded-lg bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="password"
@@ -44,7 +44,7 @@ const SignUpTextFields = () => {
         name="password"
         value={inputVal.password}
         onChange={handleChange}
-        className="mb-3 p-3 rounded-lg bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="mb-3 p-2 text-xs rounded-lg bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       <FileField onChange={handleChange} Text="Add A Profile Image" />

@@ -2,18 +2,19 @@
 import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
 import SignUpTextFields from './SignupFields'
-import { RegisterUser } from '@/functions/AUTH/RegisterUser'
 import { UserContext } from '@/utils/Context'
 import Loader from '../Loader'
-
+import { RegisterUser } from '@/functions/AUTH/RegisterUser'
 const SignUp = () => {
   const Router = useRouter()
-  const { inputVal, setInputVal, loading, setLoading } = useContext(UserContext)
+  const { inputVal, setInputVal, loading, setLoading, setUserData } =
+    useContext(UserContext)
   const HandleSignup = async () => {
     setLoading(true)
     const Data = await RegisterUser(inputVal)
+    // console.log('THE REGISTER API HAS RESPONDED', Data)
     if (Data) {
-      Router.push('/login')
+      setUserData(Data)
       setInputVal({
         email: '',
         password: '',
@@ -21,6 +22,7 @@ const SignUp = () => {
         Image: null,
       })
       setLoading(false)
+      Router.push('/')
     }
   }
   if (loading) return <Loader />
@@ -33,7 +35,7 @@ const SignUp = () => {
       <SignUpTextFields />
       <button
         onClick={HandleSignup}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg shadow-md transition-all duration-300 mt-4"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg shadow-md transition-all duration-300 mt-4 text-xs w-[10vw] mx-auto"
       >
         Sign Up
       </button>

@@ -39,7 +39,7 @@ const SignIn = () => {
         name="email"
         value={inputVal.email}
         onChange={handleChange}
-        className="mb-4 p-2 w-full rounded-xl bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-300"
+        className="mb-4 p-2 w-full text-xs rounded-xl bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-300"
       />
 
       {/* Password Input */}
@@ -49,13 +49,13 @@ const SignIn = () => {
         name="password"
         value={inputVal.password}
         onChange={handleChange}
-        className="mb-4 p-2 w-full rounded-xl bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-300"
+        className="mb-4 p-2 w-full text-xs rounded-xl bg-slate-50 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-300"
       />
 
       {/* Sign In Button */}
       <button
         onClick={HandleLogin}
-        className="bg-white hover:bg-blue-400 rounded-xl text-black hover:text-white font-semibold px-6 py-2 transition-all w-full sm:w-3/4 md:w-2/3 lg:w-1/2 mx-auto text-sm sm:text-base md:text-lg"
+        className="bg-white hover:bg-blue-400 rounded-xl text-black hover:text-white font-semibold px-6 py-2 transition-all w-full sm:w-3/4 md:w-2/3 lg:w-1/2 mx-auto text-xs"
       >
         Sign In
       </button>
@@ -65,7 +65,7 @@ const SignIn = () => {
         className="flex justify-end text-white mt-2 hover:text-blue-900 cursor-pointer"
         onClick={() => Router.push('/Forgotpass')}
       >
-        <span className="text-xs text-blue-600 sm:text-xs ">
+        <span className="text-[8px] text-blue-600  ">
           Forgot Your Password?
         </span>
       </div>
