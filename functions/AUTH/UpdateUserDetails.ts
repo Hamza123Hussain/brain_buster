@@ -4,15 +4,13 @@ import axios from 'axios'
 const updateUserProfile = async (
   Name: string,
   email: string,
-  userID: string,
   image: File | null
 ) => {
   try {
     // Create a FormData object to hold the form data
     const formData = new FormData()
-    formData.append('Name', Name)
+    formData.append('newName', Name)
     formData.append('email', email)
-    formData.append('userID', userID)
 
     // Append the image file if it exists
     if (image) {
@@ -20,10 +18,13 @@ const updateUserProfile = async (
     }
 
     // Send the form data to the backend API
-    const response = await axios.post(`${APIURL}/api/UpdateProfile`, formData)
+    const response = await axios.put(
+      `http://localhost:8000/api/User/UpdateUser`,
+      formData
+    )
 
     // Check the response and return the result
-    if (response.status === 201) {
+    if (response.status === 200) {
       console.log('User profile updated successfully:', response.data)
       return response.data
     } else {
