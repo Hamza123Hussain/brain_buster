@@ -1,9 +1,9 @@
 import { Quiz } from '@/utils/BlogInterface'
 import { UserContext } from '@/utils/Context'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 const Questions = ({ quiz }: { quiz: Quiz }) => {
   const { currentQuestionIndex } = useContext(UserContext)
-  // const [selectedOption, setSelectedOption] = useState('')
+  const [selectedOption, setSelectedOption] = useState('')
   return (
     <>
       {quiz.Questions &&
@@ -16,7 +16,13 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
                 </h3>
                 <ul className="list-disc pl-5">
                   {question.Options.map((option: any, idx: any) => (
-                    <li key={idx} className="mb-1">
+                    <li
+                      onClick={() => setSelectedOption(idx)}
+                      key={idx}
+                      className={`mb-1 rounded-lg cursor-pointer px-2 ${
+                        idx === selectedOption ? 'text-green-500 bg-black ' : ''
+                      }`}
+                    >
                       {option}
                     </li>
                   ))}
