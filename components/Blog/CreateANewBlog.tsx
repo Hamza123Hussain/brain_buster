@@ -4,12 +4,12 @@ import React, { useContext, useState } from 'react'
 import { CreateBlog } from '@/functions/Blog/CreatingABlog'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { BlogCreate } from '@/utils/BlogCreation'
+
 import CreateBlogFields from './CreateBlogFields'
 
 const WriteWithAI = () => {
   const { userData } = useContext(UserContext)
-  const [CreateValue, SetValue] = useState<BlogCreate>({
+  const [CreateValue, SetValue] = useState<any>({
     Title: '',
     Image: null,
     Text: '',
