@@ -1,6 +1,8 @@
 'use client'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
+import { Quiz } from './BlogInterface'
+import Loader from '@/components/Loader'
 
 export const UserContext = createContext<any>(null)
 
@@ -12,6 +14,15 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     Image: null,
   })
   const [loading, setLoading] = useState(true) // Start with loading true
+  const [QuizData, SetQuizData] = useState<Quiz[]>(() => {
+    try {
+      const storedData = localStorage.getItem('AIQuiz')
+      return storedData ? JSON.parse(storedData) : [] // Initialize with empty object
+    } catch (error) {
+      console.error('Failed to parse AIQuiz from localStorage:', error)
+      return [] // Fallback to empty object
+    }
+  })
   const [userData, setUserData] = useState<UserData>(() => {
     try {
       const storedData = localStorage.getItem('userData')
@@ -21,6 +32,15 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       return {} // Fallback to empty object
     }
   })
+
+  useEffect(() => {
+    // Save userData to local storage whenever it changes
+    try {
+      localStorage.setItem('AIQuiz', JSON.stringify(QuizData))
+    } catch (error) {
+      console.error('Failed to save QuizData to localStorage:', error)
+    }
+  }, [QuizData])
 
   useEffect(() => {
     // Save userData to local storage whenever it changes
@@ -46,6 +66,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         setLoading,
         inputVal,
         setInputVal,
+        SetQuizData,
+        QuizData,
       }}
     >
       {children}
