@@ -7,7 +7,7 @@ import { UserContext } from '@/utils/Context'
 import React, { useContext, useEffect, useState } from 'react'
 const QuizCard = ({ params }: { params: any }) => {
   const [quiz, setQuizData] = useState<Quiz | null>(null)
-  const { loading, setLoading } = useContext(UserContext)
+  const { loading, setLoading, handleNextQuestion } = useContext(UserContext)
   useEffect(() => {
     const GetData = async () => {
       setLoading(true)
@@ -15,8 +15,6 @@ const QuizCard = ({ params }: { params: any }) => {
         const data = await fetchDocumentByID(params.ID)
         if (data) {
           setQuizData(data)
-          //   //   console.log('DATA HAS BEEN FETCHED : ', data)
-          //   console.log(quiz?.Questions)
         }
       } catch (error) {
         console.log('ERROR IN FUNCTION :', error)
@@ -26,7 +24,6 @@ const QuizCard = ({ params }: { params: any }) => {
     }
     GetData()
   }, [params.ID, setLoading])
-
   if (loading) {
     return <Loader />
   }
@@ -42,7 +39,10 @@ const QuizCard = ({ params }: { params: any }) => {
       </p>
       <Questions quiz={quiz} />
       <div className=" flex justify-end">
-        <button className=" bg-blue-400 px-4 text-white border-gray-100 rounded-lg">
+        <button
+          onClick={() => handleNextQuestion(quiz.NumberOfQuestions)}
+          className=" bg-blue-400 px-4 text-white border-gray-100 rounded-lg"
+        >
           Next
         </button>
       </div>
