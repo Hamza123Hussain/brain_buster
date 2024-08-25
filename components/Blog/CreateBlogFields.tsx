@@ -3,11 +3,9 @@ import { QuizCreate } from '@/utils/QuizCreate'
 const CreateBlogFields = ({
   CreateValue,
   SetValue,
-  PlaceHolder,
 }: {
   CreateValue: QuizCreate
   SetValue: React.Dispatch<React.SetStateAction<QuizCreate>>
-  PlaceHolder: any
 }) => {
   const HandleChange = (
     e: React.ChangeEvent<
@@ -33,7 +31,7 @@ const CreateBlogFields = ({
           name="Topic"
           value={CreateValue.Topic || ''}
           onChange={HandleChange}
-          placeholder={PlaceHolder.Title}
+          placeholder={'Enter A Title For The Quiz'}
           className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-dusty-rose"
         />
       </div>
