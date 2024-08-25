@@ -21,7 +21,7 @@ const FileField = ({
         name="Image"
         onChange={onChange}
         accept=".jpg,.jpeg,.png,.webp" // Restrict file types
-        className="block w-full text-sm text-gray-500 file:cursor-pointer file:bg-blue-500 file:text-white file:py-2 file:px-4 file:rounded-lg file:border-0 hover:file:bg-blue-600"
+        className="block w-full text-xs text-gray-500 file:cursor-pointer file:bg-blue-500 file:text-white file:py-2 file:px-4 file:rounded-lg file:border-0 hover:file:bg-blue-600"
       />
     </div>
   )
