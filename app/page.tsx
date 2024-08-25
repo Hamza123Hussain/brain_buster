@@ -1,46 +1,23 @@
 'use client'
-import BlogCard from '@/components/Blog/BlogCard'
+import React, { useContext } from 'react'
 import Loader from '@/components/Loader'
-import { GettingAllBlogs } from '@/functions/Blog/GettingAll'
-import { BLOG } from '@/utils/BlogInterface'
-import { useEffect, useState } from 'react'
-import { FaRegSadTear } from 'react-icons/fa' // Importing an icon from React Icons
+import { Quiz } from '@/utils/BlogInterface'
+import { UserContext } from '@/utils/Context'
+import { FaRegSadTear } from 'react-icons/fa'
 
 export default function Home() {
-  const [AllBlogs, SetBlogs] = useState<BLOG[]>([])
-  const [loading, setLoading] = useState(false)
+  const { SetQuizData, QuizData } = useContext(UserContext)
 
-  useEffect(() => {
-    const GetBlogs = async () => {
-      setLoading(true)
-      const Data = await GettingAllBlogs()
-      try {
-        if (Data) {
-          setLoading(false)
-          SetBlogs(Data)
-        }
-      } catch (error) {
-        setLoading(false)
-        console.log('FUNCTION ERROR ', error)
-      }
-    }
-    GetBlogs()
-  }, [])
-
-  if (loading) {
-    return <Loader />
+  if (QuizData.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <FaRegSadTear className="text-6xl text-gray-400" />
+        <p className="text-lg text-gray-600">No Quizez Created available.</p>
+      </div>
+    )
   }
 
   return (
-    <div className="flex flex-col gap-6 p-4 mx-auto">
-      {AllBlogs.length === 0 ? (
-        <div className="flex flex-col items-center justify-center text-gray-500">
-          <FaRegSadTear size={48} className="mb-4" />
-          <p>No blogs available at the moment. Please check back later.</p>
-        </div>
-      ) : (
-        AllBlogs.map((element) => <BlogCard key={element.id} Blog={element} />)
-      )}
-    </div>
+    <div className="flex flex-col items-center mx-auto my-5 justify-center min-h-screen p-2  rounded-xl"></div>
   )
 }
