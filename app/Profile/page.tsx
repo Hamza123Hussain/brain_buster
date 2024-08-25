@@ -3,6 +3,7 @@ import UserDetail from '@/components/Auth/UserDetails'
 import Loader from '@/components/Loader'
 import updateUserProfile from '@/functions/AUTH/UpdateUserDetails'
 import { UserContext } from '@/utils/Context'
+import { UserData } from '@/utils/SignupInterface'
 import { useRouter } from 'next/navigation'
 import React, { useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -21,16 +22,16 @@ const UpdateBlog = () => {
       const Data = await updateUserProfile(
         userData.Name,
         userData.email,
-        userData.userID,
         imageFile
       )
-      //   console.log('API RESPONDED', Data)
+      // console.log('API RESPONDED', Data)
       if (Data) {
-        setUserData((element: any) => ({
+        setUserData((element: UserData) => ({
           ...element,
           Name: Data.Name,
           imageUrl: Data.imageUrl ? Data.imageUrl : element.imageUrl,
         }))
+        toast.success('PROFILE OF USER UPDATED')
         setLoading(false)
       }
     } catch (error) {}
