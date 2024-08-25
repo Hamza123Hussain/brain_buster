@@ -1,6 +1,7 @@
+import { Quiz } from '@/utils/BlogInterface'
 import React from 'react'
 
-const QuizCard = () => {
+const Questions = ({ quiz }: { quiz: Quiz }) => {
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   // const [selectedOption, setSelectedOption] = useState('')
 
@@ -21,38 +22,28 @@ const QuizCard = () => {
   //   const currentQuestion = QuizData[currentQuestionIndex]
 
   return (
-    <div>
-      {/* <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg border-slate-900 border-2">
-  <h2 className="text-[12px] font-bold text-gray-800 mb-4">
-    {currentQuestion.Question}
-  </h2>
-  <div className="flex flex-col gap-2">
-    {currentQuestion.Options.map((option: any) => (
-      <label
-        key={option}
-        className="flex items-center p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition duration-200"
-      >
-        <input
-          type="radio"
-          name="answer"
-          value={option}
-          checked={selectedOption === option}
-          onChange={handleAnswerSelect}
-          className="mr-2"
-        />
-        <span className="text-[12px]  text-gray-700">{option}</span>
-      </label>
-    ))}
-  </div>
-  <button
-    onClick={handleNextQuestion}
-    className="w-full mt-6 px-4 py-2 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
-  >
-    Next
-  </button>
-</div> */}
-    </div>
+    <>
+      {/* Ensure Questions is defined before mapping */}
+      {quiz.Questions &&
+        quiz.Questions.map((question, index) => (
+          <div key={index} className="mb-6 text-black">
+            <h3 className="font-semibold mb-2">
+              Q{index + 1}: {question.Question}
+            </h3>
+            <ul className="list-disc pl-5">
+              {question.Options.map((option: any, idx: any) => (
+                <li key={idx} className="mb-1">
+                  {option}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-sm text-gray-500">
+              Explanation: {question.Explanation}
+            </p>
+          </div>
+        ))}
+    </>
   )
 }
 
-export default QuizCard
+export default Questions
