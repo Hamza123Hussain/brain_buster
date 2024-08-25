@@ -2,10 +2,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
 import { Quiz } from './BlogInterface'
-import Loader from '@/components/Loader'
-
 export const UserContext = createContext<any>(null)
-
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [inputVal, setInputVal] = useState<InputValues>({
     email: '',
@@ -14,13 +11,13 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     Image: null,
   })
   const [loading, setLoading] = useState(true) // Start with loading true
-  const [QuizData, SetQuizData] = useState<Quiz[]>(() => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => {
     try {
-      const storedData = localStorage.getItem('AIQuiz')
-      return storedData ? JSON.parse(storedData) : [] // Initialize with empty object
+      const storedData = localStorage.getItem('CurrentIndex')
+      return storedData ? JSON.parse(storedData) : 0 // Initialize with empty object
     } catch (error) {
-      console.error('Failed to parse AIQuiz from localStorage:', error)
-      return [] // Fallback to empty object
+      console.error('Failed to parse CurrentIndex from localStorage:', error)
+      return 0 // Fallback to empty object
     }
   })
   const [userData, setUserData] = useState<UserData>(() => {
@@ -32,16 +29,17 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       return {} // Fallback to empty object
     }
   })
-
   useEffect(() => {
     // Save userData to local storage whenever it changes
     try {
-      localStorage.setItem('AIQuiz', JSON.stringify(QuizData))
+      localStorage.setItem('CurrentIndex', JSON.stringify(currentQuestionIndex))
     } catch (error) {
-      console.error('Failed to save QuizData to localStorage:', error)
+      console.error(
+        'Failed to save currentQuestionIndex to localStorage:',
+        error
+      )
     }
-  }, [QuizData])
-
+  }, [currentQuestionIndex])
   useEffect(() => {
     // Save userData to local storage whenever it changes
     try {
@@ -50,13 +48,18 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       console.error('Failed to save userData to localStorage:', error)
     }
   }, [userData])
-
   useEffect(() => {
     // Simulate loading state for demo purposes
     const timer = setTimeout(() => setLoading(false), 1000) // Simulated delay
     return () => clearTimeout(timer) // Cleanup on unmount
   }, [])
-
+  const handleNextQuestion = (NumberOfQuestions: number) => {
+    if (currentQuestionIndex < NumberOfQuestions - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
+    } else {
+      alert('You have completed the quiz!')
+    }
+  }
   return (
     <UserContext.Provider
       value={{
@@ -66,13 +69,13 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         setLoading,
         inputVal,
         setInputVal,
-        SetQuizData,
-        QuizData,
+        setCurrentQuestionIndex,
+        currentQuestionIndex,
+        handleNextQuestion,
       }}
     >
       {children}
     </UserContext.Provider>
   )
 }
-
 export default ContextProvider
