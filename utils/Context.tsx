@@ -1,6 +1,6 @@
 'use client'
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { InputValues } from './SignupInterface'
+import { InputValues, UserData } from './SignupInterface'
 
 export const UserContext = createContext<any>(null)
 
@@ -12,7 +12,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     Image: null,
   })
   const [loading, setLoading] = useState(true) // Start with loading true
-  const [userData, setUserData] = useState<any>(() => {
+  const [userData, setUserData] = useState<UserData>(() => {
     try {
       const storedData = localStorage.getItem('userData')
       return storedData ? JSON.parse(storedData) : {} // Initialize with empty object
