@@ -1,34 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react'
-import fetchUserPosts from '@/functions/Blog/GettingUserBlogs'
-import { BLOG } from '@/utils/BlogInterface'
 import { UserContext } from '@/utils/Context'
-import UserBlogCard from './UserBlogCard'
 import Loader from '../Loader'
 import { useRouter } from 'next/navigation'
-import { FaRegFrown } from 'react-icons/fa' // Import React Icon
-
+import { fetchAiQuestions } from '@/functions/Quiz/GettingUserQuiz'
+import { Quiz } from '@/utils/BlogInterface'
 const UserQuizzes = () => {
   const { userData, setLoading, loading } = useContext(UserContext)
-  const [UserBlogs, setBlogs] = useState<BLOG[]>([])
+  const [UserQUIZ, setQUIZ] = useState<Quiz[]>([])
   const Router = useRouter()
   console.log(userData.Name)
   useEffect(() => {
-    const GetUserBlogs = async () => {
+    const GetUserQUIZ = async () => {
       setLoading(true)
-      const Data = await fetchUserPosts(userData.Name)
+      const Data = await fetchAiQuestions(userData.email)
       console.log(Data)
       if (Data) {
-        setBlogs(Data)
+        setQUIZ(Data)
         setLoading(false)
       }
     }
-    GetUserBlogs()
+    GetUserQUIZ()
   }, [])
 
   if (loading) {
     return <Loader />
   }
-
   return (
     <div className="flex flex-col p-4 mx-auto">
       <div className="flex flex-col sm:flex-row gap-2 my-5">
@@ -39,22 +35,7 @@ const UserQuizzes = () => {
           Make A Quiz With AI
         </button>
       </div>
-      {UserBlogs.length > 0 ? (
-        <div className="flex flex-wrap justify-center gap-6">
-          {UserBlogs.map((element) => (
-            <UserBlogCard key={element.PostID} Blog={element} />
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col  items-center mt-20  ">
-          <FaRegFrown size={100} className="text-4xl text-gray-500 mb-4" />
-          <p className="text-center text-lg md:text-4xl text-gray-500">
-            No blogs created yet.
-          </p>
-        </div>
-      )}
     </div>
   )
 }
-
 export default UserQuizzes
