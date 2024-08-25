@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export async function getUser(userID: string) {
   try {
-    const response = await axios.get(`${APIURL}/api/GetUser/user`, {
+    const response = await axios.get(`http://localhost:8000/GetUser`, {
       params: { userID },
     })
 
