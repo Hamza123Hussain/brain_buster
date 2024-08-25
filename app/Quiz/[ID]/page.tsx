@@ -7,7 +7,8 @@ import { UserContext } from '@/utils/Context'
 import React, { useContext, useEffect, useState } from 'react'
 const QuizCard = ({ params }: { params: any }) => {
   const [quiz, setQuizData] = useState<Quiz | null>(null)
-  const { loading, setLoading, handleNextQuestion } = useContext(UserContext)
+  const { loading, setLoading, handleNextQuestion, currentQuestionIndex } =
+    useContext(UserContext)
   useEffect(() => {
     const GetData = async () => {
       setLoading(true)
@@ -43,7 +44,9 @@ const QuizCard = ({ params }: { params: any }) => {
           onClick={() => handleNextQuestion(quiz.NumberOfQuestions)}
           className=" bg-blue-400 px-4 text-white border-gray-100 rounded-lg"
         >
-          Next
+          {currentQuestionIndex === quiz.NumberOfQuestions - 1
+            ? 'Finish'
+            : 'Next'}
         </button>
       </div>
     </div>
