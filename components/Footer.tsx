@@ -14,10 +14,10 @@ const Footer = () => {
             height={40}
             className=" rounded-full"
           />
-          <h4 className="text-xl font-bold mb-2">Thought Flow</h4>
+          <h4 className="text-xl font-bold mb-2">Brain Buster</h4>
         </div>
         <p className=" text-sm sm:text-lg">
-          &copy; {new Date().getFullYear()} Thought Flow. All rights reserved.
+          &copy; {new Date().getFullYear()} Brain Buster. All rights reserved.
         </p>
       </div>
     </footer>

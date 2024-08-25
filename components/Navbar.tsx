@@ -29,7 +29,7 @@ const Navbar = () => {
             height={40}
             className="rounded-full"
           />
-          <h3 className="text-xs sm:text-base text-white">Thought Flow</h3>
+          <h3 className="text-xs sm:text-base text-white">Brain Buster</h3>
         </div>
       </Link>
       {userData ? (
