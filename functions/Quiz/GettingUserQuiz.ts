@@ -10,7 +10,7 @@ export const fetchAiQuestions = async (userEmail: string) => {
       // Return the AI questions data
       return response.data
     } else if (response.status === 404) {
-      // Handle case when no AI questions are found
+      return false
       throw new Error('No AI questions found for the given UserEmail')
     }
   } catch (error) {
