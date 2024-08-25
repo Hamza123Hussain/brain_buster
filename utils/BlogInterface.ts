@@ -2,7 +2,7 @@ export interface Quiz {
   CorrectAnswer: string
   Explanation: string
   Options: string[]
-  Question: string
+  Questions: any[]
   Topic: string
   NumberOfQuestions: number
   Difficulty: string
