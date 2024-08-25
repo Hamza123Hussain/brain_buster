@@ -4,4 +4,11 @@ export interface InputValues {
   Name: string
   Image: File | null
 }
+export interface UserData {
+  Name: string
+  UserID: string
+  email: string
+  imageUrl: string
+}
+
 export const APIURL = 'https://blog-ai-backend.vercel.app'
