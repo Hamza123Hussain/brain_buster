@@ -1,9 +1,18 @@
 import { Quiz } from '@/utils/BlogInterface'
 import { UserContext } from '@/utils/Context'
+import { Option } from 'lucide-react'
 import React, { useContext, useState } from 'react'
-const Questions = ({ quiz }: { quiz: Quiz }) => {
+//data types for selected option
+const Questions = ({
+  quiz,
+  selectedOption,
+  setSelectedOption,
+}: {
+  quiz: Quiz
+  selectedOption: any
+  setSelectedOption: any
+}) => {
   const { currentQuestionIndex } = useContext(UserContext)
-  const [selectedOption, setSelectedOption] = useState('')
   return (
     <>
       {quiz.Questions &&
@@ -17,19 +26,24 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
                 <ul className="list-disc pl-5">
                   {question.Options.map((option: any, idx: any) => (
                     <li
-                      onClick={() => setSelectedOption(idx)}
+                      onClick={() =>
+                        setSelectedOption((PREV: any) => ({
+                          ...PREV,
+                          OPTION: Option,
+                          INDEX: idx,
+                        }))
+                      }
                       key={idx}
                       className={`mb-1 rounded-lg cursor-pointer px-2 ${
-                        idx === selectedOption ? 'text-green-500 bg-black ' : ''
+                        idx === selectedOption.INDEX
+                          ? 'text-green-500 bg-black '
+                          : ''
                       }`}
                     >
                       {option}
                     </li>
                   ))}
                 </ul>
-                <p className="mt-2 text-sm text-gray-500">
-                  Explanation: {question.Explanation}
-                </p>
               </div>
             )
         )}
