@@ -2,36 +2,52 @@
 import { UserContext } from '@/utils/Context'
 import { Questions } from '@/utils/Quiz'
 import { useContext, useEffect, useState } from 'react'
+import { FaFrown, FaMeh, FaSmile } from 'react-icons/fa'
+import { useRouter } from 'next/navigation'
+
 const Report = () => {
   const [questions, setQuestions] = useState<Questions[]>([])
-  const { score } = useContext(UserContext)
+  const { score, total } = useContext(UserContext)
+  const router = useRouter()
+
   useEffect(() => {
     // Use `window` to ensure the code runs only on the client-side
-    // `window` is not available on the server, so this check makes sure the code doesn't run on the server
     if (typeof window !== 'undefined') {
-      // Get the part of the URL that comes after the `?` symbol
-      // For example, in `http://example.com/?questions=%5B%22What%20is%20React%3F%22%2C%22What%20is%20useEffect%3F%22%5D`, this would be `?questions=%5B%22What%20is%20React%3F%22%2C%22What%20is%20useEffect%3F%22%5D`
       const queryString = window.location.search
-      // Create a URLSearchParams object to easily work with query parameters
-      // This allows us to extract specific parameters from the query string
       const urlParams = new URLSearchParams(queryString)
-      // Extract the value associated with the `questions` parameter from the query string
-      // This value is URL-encoded
       const questionsParam = urlParams.get('questions')
-      // Check if `questionsParam` is not null (i.e., the `questions` parameter exists in the URL)
+
       if (questionsParam) {
-        // Decode the URL-encoded parameter to get the original string
-        // Then parse the string as JSON to convert it back into a JavaScript array
-        // `decodeURIComponent` undoes the URL encoding, and `JSON.parse` converts the JSON string into an array
         const decodedQuestions = JSON.parse(decodeURIComponent(questionsParam))
         setQuestions(decodedQuestions)
       }
     }
   }, [])
+
+  // Calculate percentage score
+  const percentageScore = (score / total) * 100
+
+  // Determine icon based on score percentage
+  let icon
+  if (percentageScore < 50) {
+    icon = <FaFrown size={50} className="text-red-500" />
+  } else if (percentageScore >= 50 && percentageScore < 75) {
+    icon = <FaMeh size={50} className="text-yellow-500" />
+  } else if (percentageScore >= 75 && percentageScore < 85) {
+    icon = <FaSmile size={50} className="text-green-500" />
+  } else {
+    icon = <FaSmile size={50} className="text-blue-500" /> // You can change this icon for scores above 85%
+  }
+
   return (
     <div className="p-4 bg-white shadow-lg rounded-lg max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-center">Quiz Report Card</h2>
-      {score}
+      <div className="text-center mb-4">
+        <p className="text-xl font-semibold mb-2">
+          Your Score: {score} / {total}
+        </p>
+        <div className=" flex justify-center items-center"> {icon}</div>
+      </div>
       {questions.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
           {questions.map((question, index) => (
@@ -57,6 +73,14 @@ const Report = () => {
       ) : (
         <p className="text-center text-gray-500">No questions available.</p>
       )}
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={() => router.push('/')}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md"
+        >
+          Go to Home
+        </button>
+      </div>
     </div>
   )
 }
