@@ -32,6 +32,7 @@ const UpdateBlog = () => {
           imageUrl: Data.imageUrl ? Data.imageUrl : element.imageUrl,
         }))
         toast.success('PROFILE OF USER UPDATED')
+        Router.push('/')
         setLoading(false)
       }
     } catch (error) {}
