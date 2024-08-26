@@ -58,7 +58,8 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
             handleNextQuestion(
               quiz.NumberOfQuestions,
               selectedOption.OPTION,
-              selectedOption.Correct
+              selectedOption.Correct,
+              quiz.Questions
             )
             setSelectedOption((prev: any) => ({ ...prev, INDEX: -1 }))
           }}
