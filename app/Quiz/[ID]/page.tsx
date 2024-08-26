@@ -1,6 +1,6 @@
 'use client'
 import Loader from '@/components/Loader'
-import Questions from '@/components/Quiz/QuizCard'
+import Questions from '@/components/Quiz/Questions'
 import { fetchDocumentByID } from '@/functions/Quiz/GettingAsingleDoc'
 import { Quiz } from '@/utils/Quiz'
 import { UserContext } from '@/utils/Context'
