@@ -3,12 +3,12 @@ import { UserContext } from '@/utils/Context'
 import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import CreateBlogFields from '@/components/Blog/CreateBlogFields'
+import CreateBlogFields from '@/components/Quiz/CreateBlogFields'
 import { QuizCreate } from '@/utils/QuizCreate'
 import { fetchAiQuestions } from '@/functions/Quiz/CreateAQuiz'
 const WriteWithAI = () => {
   const Router = useRouter()
-  const { userData, setLoading, SetQuizData } = useContext(UserContext)
+  const { userData, setLoading } = useContext(UserContext)
   const [CreateValue, SetValue] = useState<QuizCreate>({
     Topic: '',
     Image: null,
@@ -27,7 +27,6 @@ const WriteWithAI = () => {
       )
       if (result) {
         console.log(result)
-        SetQuizData(result)
         setLoading(false)
         toast.success('QUIZ HAS BEEN MADE')
         Router.push('/')
