@@ -3,6 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
 export const UserContext = createContext<any>(null)
 const ContextProvider = ({ children }: { children: ReactNode }) => {
+  //States
   const [inputVal, setInputVal] = useState<InputValues>({
     email: '',
     password: '',
@@ -37,6 +38,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       return 0 // Fallback to empty object
     }
   })
+
+  //saving on local storage
   useEffect(() => {
     // Save userData to local storage whenever it changes
     try {
@@ -72,7 +75,16 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     const timer = setTimeout(() => setLoading(false), 1000) // Simulated delay
     return () => clearTimeout(timer) // Cleanup on unmount
   }, [])
-  const handleNextQuestion = (NumberOfQuestions: number) => {
+
+  //functions
+  const handleNextQuestion = (
+    NumberOfQuestions: number,
+    OPTION: string,
+    CorrectAnswer: string
+  ) => {
+    if (OPTION === CorrectAnswer) {
+      setscore((prev: number) => prev + 1)
+    }
     if (currentQuestionIndex < NumberOfQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
