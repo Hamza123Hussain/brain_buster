@@ -1,22 +1,11 @@
-import { deletequiz } from '@/functions/Quiz/DeletingAQuiz'
-import { Quiz } from '@/utils/BlogInterface'
+import { Quiz } from '@/utils/Quiz'
 import { UserContext } from '@/utils/Context'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
-
+import UserBtns from './UserBtns'
 const DisplayCard = ({ element }: { element: Quiz }) => {
   const Router = useRouter()
-  const PathName = usePathname()
-  const { userData, setscore, setCurrentQuestionIndex } =
-    useContext(UserContext)
-  // Handle delete button click to delete the quiz
-  const DeleteQuiz = async (event: React.MouseEvent) => {
-    event.stopPropagation() // Prevents the click from bubbling up to the card
-    const Deleted = await deletequiz(userData.UserID, element.ID)
-    if (Deleted) {
-      window.location.reload()
-    }
-  }
+  const { setscore, setCurrentQuestionIndex } = useContext(UserContext)
   const MoveToQuiz = () => {
     setscore(0)
     setCurrentQuestionIndex(0)
@@ -43,16 +32,7 @@ const DisplayCard = ({ element }: { element: Quiz }) => {
       <p className="text-gray-600">
         <strong>Number Of Questions:</strong> {element.NumberOfQuestions}
       </p>
-      {PathName === '/dashboard' && (
-        <div className="flex justify-end items-center">
-          <button
-            onClick={DeleteQuiz} // Only the button click should trigger delete
-            className="text-white border-2 border-gray-200 hover:bg-red-400 bg-red-600 px-2 rounded-lg"
-          >
-            Delete
-          </button>
-        </div>
-      )}
+      <UserBtns Quiz_element={element} />
     </div>
   )
 }
