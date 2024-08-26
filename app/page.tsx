@@ -40,14 +40,17 @@ export default function Home() {
   if (loading) return <Loader />
   //add title and icon here
   return (
-    <div className="flex flex-col items-start my-2 justify-start  p-2  rounded-xl">
-      <h3 className=" text-black capitalize  text-2xl px-1 sm:text-4xl font-extrabold ">
-        All Quizzes
-      </h3>
-
-      {QuizData.map((Quiz) => (
-        <DisplayCard key={Quiz.ID} element={Quiz} />
-      ))}
+    <div className=" flex flex-col justify-center items-center mx-auto">
+      <div className="flex flex-col items-start my-2 justify-start  p-2  rounded-xl">
+        <h3 className=" text-black capitalize  text-2xl px-1 sm:text-4xl font-extrabold ">
+          All Quizzes
+        </h3>{' '}
+      </div>
+      <div className=" grid grid-cols-1  sm:grid-cols-2  gap-5  justify-center items-center mx-auto">
+        {QuizData.map((Quiz) => (
+          <DisplayCard key={Quiz.ID} element={Quiz} />
+        ))}
+      </div>
     </div>
   )
 }
