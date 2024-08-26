@@ -2,17 +2,12 @@
 import Loader from '@/components/Loader'
 import Questions from '@/components/Quiz/QuizCard'
 import { fetchDocumentByID } from '@/functions/Quiz/GettingAsingleDoc'
-import { Quiz } from '@/utils/BlogInterface'
+import { Quiz } from '@/utils/Quiz'
 import { UserContext } from '@/utils/Context'
 import React, { useContext, useEffect, useState } from 'react'
 const QuizCard = ({ params }: { params: any }) => {
   const [quiz, setQuizData] = useState<Quiz | null>(null)
-  const [selectedOption, setSelectedOption] = useState<any>({
-    OPTION: '',
-    INDEX: 0,
-  })
-  const { loading, setLoading, handleNextQuestion, currentQuestionIndex } =
-    useContext(UserContext)
+  const { loading, setLoading } = useContext(UserContext)
   useEffect(() => {
     const GetData = async () => {
       setLoading(true)
@@ -42,21 +37,7 @@ const QuizCard = ({ params }: { params: any }) => {
         <span>Number Of Questions : {quiz.NumberOfQuestions} </span>
         <span>Difficulty: {quiz.Difficulty}</span>
       </p>
-      <Questions
-        quiz={quiz}
-        selectedOption={selectedOption}
-        setSelectedOption={setSelectedOption}
-      />
-      <div className=" flex justify-end">
-        <button
-          onClick={() => handleNextQuestion(quiz.NumberOfQuestions)}
-          className=" bg-blue-400 px-4 text-white border-gray-100 rounded-lg"
-        >
-          {currentQuestionIndex === quiz.NumberOfQuestions - 1
-            ? 'Finish'
-            : 'Next'}
-        </button>
-      </div>
+      <Questions quiz={quiz} />
     </div>
   )
 }
