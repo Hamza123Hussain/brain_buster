@@ -1,7 +1,6 @@
 'use client'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
-import { Quiz } from './BlogInterface'
 export const UserContext = createContext<any>(null)
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [inputVal, setInputVal] = useState<InputValues>({
@@ -29,6 +28,15 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       return {} // Fallback to empty object
     }
   })
+  const [score, setscore] = useState(() => {
+    try {
+      const storedData = localStorage.getItem('Currentscore')
+      return storedData ? JSON.parse(storedData) : 0 // Initialize with empty object
+    } catch (error) {
+      console.error('Failed to parse CurrentIndex from localStorage:', error)
+      return 0 // Fallback to empty object
+    }
+  })
   useEffect(() => {
     // Save userData to local storage whenever it changes
     try {
@@ -40,6 +48,17 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       )
     }
   }, [currentQuestionIndex])
+  useEffect(() => {
+    // Save userData to local storage whenever it changes
+    try {
+      localStorage.setItem('Currentscore', JSON.stringify(score))
+    } catch (error) {
+      console.error(
+        'Failed to save currentQuestionIndex to localStorage:',
+        error
+      )
+    }
+  }, [score])
   useEffect(() => {
     // Save userData to local storage whenever it changes
     try {
@@ -72,6 +91,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         setCurrentQuestionIndex,
         currentQuestionIndex,
         handleNextQuestion,
+        setscore,
+        score,
       }}
     >
       {children}
