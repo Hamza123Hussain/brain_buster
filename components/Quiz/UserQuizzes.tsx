@@ -4,7 +4,7 @@ import Loader from '../Loader'
 import { useRouter } from 'next/navigation'
 import { fetchAiQuestions } from '@/functions/Quiz/GettingUserQuiz'
 import { Quiz } from '@/utils/BlogInterface'
-import DisplayCard from '../Quiz/DisplayCard'
+import DisplayCard from './DisplayCard'
 import { FaRegFrown } from 'react-icons/fa'
 const UserQuizzes = () => {
   const { userData, setLoading, loading } = useContext(UserContext)
@@ -19,7 +19,7 @@ const UserQuizzes = () => {
       setLoading(true)
       try {
         const Data = await fetchAiQuestions(userData.email)
-        console.log(Data)
+        // console.log(Data)
         if (Data) {
           setQUIZ(Data)
         } else {
@@ -32,7 +32,7 @@ const UserQuizzes = () => {
       }
     }
     GetUserQUIZ()
-  }, [userData.email])
+  }, [])
 
   if (loading) {
     return <Loader />
