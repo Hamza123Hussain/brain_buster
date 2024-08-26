@@ -7,7 +7,7 @@ import { UserContext } from '@/utils/Context'
 import React, { useContext, useEffect, useState } from 'react'
 const QuizCard = ({ params }: { params: any }) => {
   const [quiz, setQuizData] = useState<Quiz | null>(null)
-  const { loading, setLoading } = useContext(UserContext)
+  const { loading, setLoading, settotal } = useContext(UserContext)
   useEffect(() => {
     const GetData = async () => {
       setLoading(true)
@@ -15,6 +15,7 @@ const QuizCard = ({ params }: { params: any }) => {
         const data = await fetchDocumentByID(params.ID)
         if (data) {
           setQuizData(data)
+          settotal(data.NumberOfQuestions)
         }
       } catch (error) {
         console.log('ERROR IN FUNCTION :', error)
