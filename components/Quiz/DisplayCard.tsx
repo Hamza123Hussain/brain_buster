@@ -19,7 +19,7 @@ const DisplayCard = ({ element }: { element: Quiz }) => {
       className="bg-white shadow-md rounded-lg p-4 w-full sm:w-[45vw] shadow-slate-800 border-2 border-slate-900  cursor-pointer hover:bg-[#f2f2f2] transition-transform transform hover:scale-90"
       key={element.ID}
     >
-      <div className=" flex justify-between items-center mt-3">
+      <div className=" flex flex-col md:flex-row justify-between items-center mt-3">
         <h3 className="text-xl font-semibold text-cyan-700 mb-2">
           {element.Topic}
         </h3>
