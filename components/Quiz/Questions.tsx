@@ -54,6 +54,7 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
         )}
       <div className=" flex justify-end">
         <button
+          disabled={selectedOption.INDEX === -1}
           onClick={() => {
             handleNextQuestion(
               quiz.NumberOfQuestions,
