@@ -1,25 +1,30 @@
-import { Quiz } from '@/utils/BlogInterface'
+import { Quiz } from '@/utils/Quiz'
 import { UserContext } from '@/utils/Context'
-import { Option } from 'lucide-react'
 import React, { useContext, useState } from 'react'
-//data types for selected option
-const Questions = ({
-  quiz,
-  selectedOption,
-  setSelectedOption,
-}: {
-  quiz: Quiz
-  selectedOption: any
-  setSelectedOption: any
-}) => {
-  const { currentQuestionIndex } = useContext(UserContext)
+import { Question } from '@/utils/QuestionsInterface'
+const Questions = ({ quiz }: { quiz: Quiz }) => {
+  const { currentQuestionIndex, handleNextQuestion } = useContext(UserContext)
+  const [selectedOption, setSelectedOption] = useState<Question>({
+    OPTION: '',
+    INDEX: -1,
+    Correct: '',
+  })
   return (
-    <>
+    <div>
       {quiz.Questions &&
         quiz.Questions.map(
           (question, index) =>
             currentQuestionIndex == index && (
-              <div key={index} className="mb-6 text-black">
+              <div
+                onClick={() => {
+                  setSelectedOption((prev: Question) => ({
+                    ...prev,
+                    Correct: question.Correct_Answer,
+                  }))
+                }}
+                key={index}
+                className="mb-6 text-black"
+              >
                 <h3 className="font-semibold mb-2">
                   Q{index + 1}: {question.Question}
                 </h3>
@@ -29,7 +34,7 @@ const Questions = ({
                       onClick={() =>
                         setSelectedOption((PREV: any) => ({
                           ...PREV,
-                          OPTION: Option,
+                          OPTION: option,
                           INDEX: idx,
                         }))
                       }
@@ -47,7 +52,24 @@ const Questions = ({
               </div>
             )
         )}
-    </>
+      <div className=" flex justify-end">
+        <button
+          onClick={() => {
+            handleNextQuestion(
+              quiz.NumberOfQuestions,
+              selectedOption.OPTION,
+              selectedOption.Correct
+            )
+            setSelectedOption((prev: any) => ({ ...prev, INDEX: -1 }))
+          }}
+          className=" bg-blue-400 px-4 text-white border-gray-100 rounded-lg"
+        >
+          {currentQuestionIndex === quiz.NumberOfQuestions - 1
+            ? 'Finish'
+            : 'Next'}
+        </button>
+      </div>
+    </div>
   )
 }
 
