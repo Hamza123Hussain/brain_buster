@@ -3,12 +3,13 @@ import { UserContext } from '@/utils/Context'
 import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import CreateBlogFields from '@/components/Quiz/CreateBlogFields'
 import { QuizCreate } from '@/utils/QuizCreate'
 import { fetchAiQuestions } from '@/functions/Quiz/CreateAQuiz'
+import Loader from '@/components/Loader'
+import CreateQuizFields from '@/components/Quiz/CreateQuizFields'
 const WriteWithAI = () => {
   const Router = useRouter()
-  const { userData, setLoading } = useContext(UserContext)
+  const { userData, setLoading, loading } = useContext(UserContext)
   const [CreateValue, SetValue] = useState<QuizCreate>({
     Topic: '',
     Image: null,
@@ -26,7 +27,7 @@ const WriteWithAI = () => {
         userData.Name
       )
       if (result) {
-        console.log(result)
+        // console.log(result)
         setLoading(false)
         toast.success('QUIZ HAS BEEN MADE')
         Router.push('/')
@@ -36,13 +37,14 @@ const WriteWithAI = () => {
       setLoading(false)
     }
   }
+  if (loading) return <Loader />
   return (
     <div className="flex flex-col items-center bg-gray-100 p-8 rounded-lg shadow-lg max-w-3xl mx-auto my-10">
       <h1 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to from-orange-800  to-gray-300">
         Create a New Blog With AI
       </h1>
       <div className="w-full space-y-6">
-        <CreateBlogFields CreateValue={CreateValue} SetValue={SetValue} />
+        <CreateQuizFields CreateValue={CreateValue} SetValue={SetValue} />
         <div className=" flex gap-2">
           <button
             onClick={handleFetchQuestions}
