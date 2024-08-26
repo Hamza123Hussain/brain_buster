@@ -7,6 +7,10 @@ import { UserContext } from '@/utils/Context'
 import React, { useContext, useEffect, useState } from 'react'
 const QuizCard = ({ params }: { params: any }) => {
   const [quiz, setQuizData] = useState<Quiz | null>(null)
+  const [selectedOption, setSelectedOption] = useState<any>({
+    OPTION: '',
+    INDEX: 0,
+  })
   const { loading, setLoading, handleNextQuestion, currentQuestionIndex } =
     useContext(UserContext)
   useEffect(() => {
@@ -38,7 +42,11 @@ const QuizCard = ({ params }: { params: any }) => {
         <span>Number Of Questions : {quiz.NumberOfQuestions} </span>
         <span>Difficulty: {quiz.Difficulty}</span>
       </p>
-      <Questions quiz={quiz} />
+      <Questions
+        quiz={quiz}
+        selectedOption={selectedOption}
+        setSelectedOption={setSelectedOption}
+      />
       <div className=" flex justify-end">
         <button
           onClick={() => handleNextQuestion(quiz.NumberOfQuestions)}
