@@ -1,7 +1,7 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react'
 import Loader from '@/components/Loader'
-import { Quiz } from '@/utils/BlogInterface'
+import { Quiz } from '@/utils/Quiz'
 import { UserContext } from '@/utils/Context'
 import { FaRegFrown, FaRegSadTear } from 'react-icons/fa'
 import { fetchAllAiQuiz } from '@/functions/Quiz/GettingALLQuiz'
