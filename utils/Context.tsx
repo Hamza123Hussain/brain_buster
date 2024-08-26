@@ -2,6 +2,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
 import { useRouter } from 'next/navigation'
+import { Questions } from './Quiz'
 export const UserContext = createContext<any>(null)
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   //States
@@ -37,6 +38,15 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       return storedData ? JSON.parse(storedData) : 0 // Initialize with empty object
     } catch (error) {
       console.error('Failed to parse CurrentIndex from localStorage:', error)
+      return 0 // Fallback to empty object
+    }
+  })
+  const [total, settotal] = useState(() => {
+    try {
+      const storedData = localStorage.getItem('total')
+      return storedData ? JSON.parse(storedData) : 0 // Initialize with empty object
+    } catch (error) {
+      console.error('Failed to parse total from localStorage:', error)
       return 0 // Fallback to empty object
     }
   })
@@ -77,25 +87,35 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     const timer = setTimeout(() => setLoading(false), 1000) // Simulated delay
     return () => clearTimeout(timer) // Cleanup on unmount
   }, [])
-
+  useEffect(() => {
+    // Save userData to local storage whenever it changes
+    try {
+      localStorage.setItem('total', JSON.stringify(total))
+    } catch (error) {
+      console.error('Failed to save userData to localStorage:', error)
+    }
+  }, [total])
+  useEffect(() => {
+    // Simulate loading state for demo purposes
+    const timer = setTimeout(() => setLoading(false), 1000) // Simulated delay
+    return () => clearTimeout(timer) // Cleanup on unmount
+  }, [])
   //functions
   const handleNextQuestion = (
     NumberOfQuestions: number,
     OPTION: string,
     CorrectAnswer: string,
-    Questions: any[]
+    Questions: Questions[]
   ) => {
     if (OPTION === CorrectAnswer) {
       setscore((prev: number) => prev + 1)
     }
-
     if (currentQuestionIndex < NumberOfQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
       // Convert the Questions array to a JSON string
       const questionsString = encodeURIComponent(JSON.stringify(Questions))
       // Result: '%5B%22What%20is%20React%3F%22%2C%22What%20is%20useEffect%3F%22%2C%22Explain%20useState%20hook.%22%5D'
-
       // Pass the serialized array as a query parameter in the URL
       Router.push(`/Report?questions=${questionsString}`)
     }
@@ -114,6 +134,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         handleNextQuestion,
         setscore,
         score,
+        settotal,
+        total,
       }}
     >
       {children}
