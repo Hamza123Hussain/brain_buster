@@ -1,6 +1,6 @@
 import React from 'react'
 import { QuizCreate } from '@/utils/QuizCreate'
-const CreateBlogFields = ({
+const CreateQuizFields = ({
   CreateValue,
   SetValue,
 }: {
@@ -84,4 +84,4 @@ const CreateBlogFields = ({
   )
 }
 
-export default CreateBlogFields
+export default CreateQuizFields
