@@ -1,6 +1,7 @@
 'use client'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
+import { useRouter } from 'next/navigation'
 export const UserContext = createContext<any>(null)
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   //States
@@ -10,6 +11,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     Name: '',
     Image: null,
   })
+  const Router = useRouter()
   const [loading, setLoading] = useState(true) // Start with loading true
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => {
     try {
@@ -80,15 +82,22 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
   const handleNextQuestion = (
     NumberOfQuestions: number,
     OPTION: string,
-    CorrectAnswer: string
+    CorrectAnswer: string,
+    Questions: any[]
   ) => {
     if (OPTION === CorrectAnswer) {
       setscore((prev: number) => prev + 1)
     }
+
     if (currentQuestionIndex < NumberOfQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
-      alert('You have completed the quiz!')
+      // Convert the Questions array to a JSON string
+      const questionsString = encodeURIComponent(JSON.stringify(Questions))
+      // Result: '%5B%22What%20is%20React%3F%22%2C%22What%20is%20useEffect%3F%22%2C%22Explain%20useState%20hook.%22%5D'
+
+      // Pass the serialized array as a query parameter in the URL
+      Router.push(`/Report?questions=${questionsString}`)
     }
   }
   return (
