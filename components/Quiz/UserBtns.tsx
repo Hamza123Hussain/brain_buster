@@ -1,9 +1,10 @@
 import { deletequiz } from '@/functions/Quiz/DeletingAQuiz'
 import { UserContext } from '@/utils/Context'
 import { Quiz } from '@/utils/Quiz'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
 const UserBtns = ({ Quiz_element }: { Quiz_element: Quiz }) => {
+  const Router = useRouter()
   const { userData } = useContext(UserContext)
   const DeleteQuiz = async (event: React.MouseEvent) => {
     event.stopPropagation() // Prevents the click from bubbling up to the card
@@ -14,6 +15,8 @@ const UserBtns = ({ Quiz_element }: { Quiz_element: Quiz }) => {
   }
   const GoToFeedBack = async (event: React.MouseEvent) => {
     event.stopPropagation() // Prevents the click from bubbling up to the card
+    const QuizData = encodeURIComponent(JSON.stringify(Quiz_element))
+    Router.push(`/Comment?QuizData=${QuizData}`)
   }
   const PathName = usePathname()
   return (
