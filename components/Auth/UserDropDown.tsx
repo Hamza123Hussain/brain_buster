@@ -37,7 +37,7 @@ const UserDropDown = ({ setDropdownOpen }: { setDropdownOpen: any }) => {
         href="/dashboard"
         className="block px-4 py-2 text-sm hover:bg-gray-200"
       >
-        My Blogs
+        My Quizzes
       </Link>
       <button
         onClick={ByeBye}
