@@ -4,21 +4,32 @@ import CommentCard from '@/components/Quiz/CommentCard'
 import DisplayCard from '@/components/Quiz/DisplayCard'
 import { UserContext } from '@/utils/Context'
 import { CommentData } from '@/utils/Quiz'
-import Image from 'next/image'
 import React, { useContext, useEffect } from 'react'
 const CommentPage = () => {
   const { QUIZDATA, setData } = useContext(UserContext)
   useEffect(() => {
+    // Check if we are in the browser environment
     if (typeof window !== 'undefined') {
-      const Query = window.location.search
-      const URLParam = new URLSearchParams(Query)
-      const Data = URLParam.get('QuizData')
-      if (Data) {
-        const DecodeData = JSON.parse(decodeURIComponent(Data))
-        setData(DecodeData)
+      // Retrieve the 'isDataLoaded' flag from localStorage
+      const isDataLoaded = localStorage.getItem('isDataLoaded')
+
+      // Only fetch data from URL parameters if 'isDataLoaded' is not set
+      if (!isDataLoaded) {
+        const Query = window.location.search
+        const URLParam = new URLSearchParams(Query)
+        const Data = URLParam.get('QuizData')
+
+        if (Data) {
+          const DecodeData = JSON.parse(decodeURIComponent(Data))
+          setData(DecodeData)
+
+          // Set the 'isDataLoaded' flag to true in localStorage
+          localStorage.setItem('isDataLoaded', 'true')
+        }
       }
     }
   }, [])
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
       {/* Ensure QUIZDATA is defined before rendering DisplayCard */}
