@@ -2,7 +2,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
 import { useRouter } from 'next/navigation'
-import { Questions } from './Quiz'
+import { Questions, Quiz } from './Quiz'
 export const UserContext = createContext<any>(null)
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   //States
@@ -48,6 +48,16 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error('Failed to parse total from localStorage:', error)
       return 0 // Fallback to empty object
+    }
+  })
+
+  const [QUIZDATA, setData] = useState<Quiz | undefined>(() => {
+    try {
+      const storedData = localStorage.getItem('QuizData')
+      return storedData ? JSON.parse(storedData) : {} // Initialize with empty object
+    } catch (error) {
+      console.error('Failed to parse QuizData from localStorage:', error)
+      return {} // Fallback to empty object
     }
   })
 
@@ -100,6 +110,14 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     const timer = setTimeout(() => setLoading(false), 1000) // Simulated delay
     return () => clearTimeout(timer) // Cleanup on unmount
   }, [])
+  useEffect(() => {
+    // Save userData to local storage whenever it changes
+    try {
+      localStorage.setItem('QuizData', JSON.stringify(QUIZDATA))
+    } catch (error) {
+      console.error('Failed to save userData to localStorage:', error)
+    }
+  }, [QUIZDATA])
   //functions
   const handleNextQuestion = (
     NumberOfQuestions: number,
@@ -136,6 +154,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         score,
         settotal,
         total,
+        QUIZDATA,
+        setData,
       }}
     >
       {children}
