@@ -8,14 +8,16 @@ export interface Quiz {
   Difficulty: string
   ID: string
   CreatedBy: String
+  comments: CommentData[]
 }
-// export interface CommentData {
-//   CommentID: string
-//   CreatedAt: number
-//   Text: string
-//   UserID: string
-//   UserName: string
-// }
+export interface CommentData {
+  CommentID: string
+  CreatedAt: number
+  Text: string
+  UserName: string
+  UserEmail: string
+  UserImage: string
+}
 
 export interface Questions {
   Explanation: string
