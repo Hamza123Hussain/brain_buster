@@ -28,16 +28,16 @@ export default function Home() {
     }
     GetQuizzes()
   }, [])
-  if (QuizData.length === 0) {
-    return (
-      <div className="flex flex-col justify-center mx-auto  items-center mt-20  ">
-        <FaRegFrown size={100} className="text-4xl text-gray-500 mb-4" />
-        <p className="text-center text-lg md:text-4xl text-gray-500">
-          No Quizzes created yet.
-        </p>
-      </div>
-    )
-  }
+  // if (QuizData.length === 0) {
+  //   return (
+  //     <div className="flex flex-col justify-center mx-auto  items-center mt-20  ">
+  //       <FaRegFrown size={100} className="text-4xl text-gray-500 mb-4" />
+  //       <p className="text-center text-lg md:text-4xl text-gray-500">
+  //         No Quizzes created yet.
+  //       </p>
+  //     </div>
+  //   )
+  // }
   if (loading) return <Loader />
   //add title and icon here
   return (
