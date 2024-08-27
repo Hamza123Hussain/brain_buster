@@ -3,7 +3,8 @@ import { UserContext } from '@/utils/Context'
 import React, { useContext, useState } from 'react'
 import { Question } from '@/utils/QuestionsInterface'
 const Questions = ({ quiz }: { quiz: Quiz }) => {
-  const { currentQuestionIndex, handleNextQuestion } = useContext(UserContext)
+  const { currentQuestionIndex, handleNextQuestion, score } =
+    useContext(UserContext)
   const [selectedOption, setSelectedOption] = useState<Question>({
     OPTION: '',
     INDEX: -1,
@@ -60,7 +61,9 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
               quiz.NumberOfQuestions,
               selectedOption.OPTION,
               selectedOption.Correct,
-              quiz.Questions
+              quiz.Questions,
+              quiz.ID,
+              score
             )
             setSelectedOption((prev: any) => ({ ...prev, INDEX: -1 }))
           }}
