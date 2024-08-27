@@ -14,7 +14,7 @@ const DisplayCard = ({ element }: { element: Quiz }) => {
   }
   return (
     <div
-      className="bg-white shadow-md rounded-lg p-4 w-full sm:w-[45vw] shadow-slate-800 border-2 border-slate-900 cursor-pointer hover:bg-[#f2f2f2] transition-transform transform hover:scale-90"
+      className="bg-white shadow-md rounded-lg p-4  w-[90vw] sm:w-[45vw] shadow-slate-800 border-2 border-slate-900 cursor-pointer hover:bg-[#f2f2f2] transition-transform transform hover:scale-90"
       key={element.ID}
       onClick={MoveToQuiz} // Click anywhere on the card routes to the quiz page
     >

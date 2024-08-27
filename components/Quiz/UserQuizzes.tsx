@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import CreatedQuizzes from './CreatedQuizzes'
-import AttemptingQuizDetails from '@/app/AttemptingQuizDetails'
+import AttemptingQuizDetails from '@/components/Quiz/AttemptingQuizDetails'
 const UserQuizzes = () => {
   const [activeTab, setActiveTab] = useState('created') // State for active tab
   const Router = useRouter()

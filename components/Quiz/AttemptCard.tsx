@@ -6,7 +6,7 @@ const AttemptCard = ({ attempt }: { attempt: UserAttempt }) => {
     Score,
   } = attempt
   return (
-    <div className="bg-white shadow-md rounded-lg p-2 w-[90vw] md:w-[45vw] shadow-slate-800 border-2 border-slate-900 cursor-pointer hover:bg-[#f2f2f2] transition-transform transform hover:scale-90">
+    <div className="bg-white shadow-md rounded-lg p-2 w-[90vw] sm:w-[45vw] shadow-slate-800 border-2 border-slate-900 cursor-pointer hover:bg-[#f2f2f2] transition-transform transform hover:scale-90">
       {/* Quiz information */}
       <div className="flex flex-col md:flex-row justify-between items-center">
         <h3 className="text-xl font-semibold text-cyan-700 mb-2">{Topic}</h3>
