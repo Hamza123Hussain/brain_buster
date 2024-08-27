@@ -4,8 +4,9 @@ import { InputValues, UserData } from './SignupInterface'
 import { useRouter } from 'next/navigation'
 import { Questions, Quiz } from './Quiz'
 export const UserContext = createContext<any>(null)
+
 const ContextProvider = ({ children }: { children: ReactNode }) => {
-  //States
+  // States
   const [inputVal, setInputVal] = useState<InputValues>({
     email: '',
     password: '',
@@ -14,15 +15,17 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
   })
   const Router = useRouter()
   const [loading, setLoading] = useState(true) // Start with loading true
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => {
     try {
       const storedData = localStorage.getItem('CurrentIndex')
-      return storedData ? JSON.parse(storedData) : 0 // Initialize with empty object
+      return storedData ? JSON.parse(storedData) : 0 // Initialize with 0
     } catch (error) {
       console.error('Failed to parse CurrentIndex from localStorage:', error)
-      return 0 // Fallback to empty object
+      return 0 // Fallback to 0
     }
   })
+
   const [userData, setUserData] = useState<UserData>(() => {
     try {
       const storedData = localStorage.getItem('userData')
@@ -32,38 +35,39 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       return {} // Fallback to empty object
     }
   })
+
   const [score, setscore] = useState(() => {
     try {
       const storedData = localStorage.getItem('Currentscore')
-      return storedData ? JSON.parse(storedData) : 0 // Initialize with empty object
+      return storedData ? JSON.parse(storedData) : 0 // Initialize with 0
     } catch (error) {
-      console.error('Failed to parse CurrentIndex from localStorage:', error)
-      return 0 // Fallback to empty object
+      console.error('Failed to parse Currentscore from localStorage:', error)
+      return 0 // Fallback to 0
     }
   })
+
   const [total, settotal] = useState(() => {
     try {
       const storedData = localStorage.getItem('total')
-      return storedData ? JSON.parse(storedData) : 0 // Initialize with empty object
+      return storedData ? JSON.parse(storedData) : 0 // Initialize with 0
     } catch (error) {
       console.error('Failed to parse total from localStorage:', error)
-      return 0 // Fallback to empty object
+      return 0 // Fallback to 0
     }
   })
 
   const [QUIZDATA, setData] = useState<Quiz | undefined>(() => {
     try {
       const storedData = localStorage.getItem('QuizData')
-      return storedData ? JSON.parse(storedData) : {} // Initialize with empty object
+      return storedData ? JSON.parse(storedData) : undefined // Initialize with undefined
     } catch (error) {
       console.error('Failed to parse QuizData from localStorage:', error)
-      return {} // Fallback to empty object
+      return undefined // Fallback to undefined
     }
   })
 
-  //saving on local storage
+  // Effect for saving currentQuestionIndex to local storage
   useEffect(() => {
-    // Save userData to local storage whenever it changes
     try {
       localStorage.setItem('CurrentIndex', JSON.stringify(currentQuestionIndex))
     } catch (error) {
@@ -73,52 +77,52 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       )
     }
   }, [currentQuestionIndex])
+
+  // Effect for saving score to local storage
   useEffect(() => {
-    // Save userData to local storage whenever it changes
     try {
       localStorage.setItem('Currentscore', JSON.stringify(score))
     } catch (error) {
-      console.error(
-        'Failed to save currentQuestionIndex to localStorage:',
-        error
-      )
+      console.error('Failed to save score to localStorage:', error)
     }
   }, [score])
+
+  // Effect for saving userData to local storage
   useEffect(() => {
-    // Save userData to local storage whenever it changes
     try {
       localStorage.setItem('userData', JSON.stringify(userData))
     } catch (error) {
       console.error('Failed to save userData to localStorage:', error)
     }
   }, [userData])
+
+  // Effect for loading state and timer for demonstration purposes
   useEffect(() => {
-    // Simulate loading state for demo purposes
     const timer = setTimeout(() => setLoading(false), 1000) // Simulated delay
     return () => clearTimeout(timer) // Cleanup on unmount
   }, [])
+
+  // Effect for saving total to local storage
   useEffect(() => {
-    // Save userData to local storage whenever it changes
     try {
       localStorage.setItem('total', JSON.stringify(total))
     } catch (error) {
-      console.error('Failed to save userData to localStorage:', error)
+      console.error('Failed to save total to localStorage:', error)
     }
   }, [total])
+
+  // Effect for saving QUIZDATA to local storage
   useEffect(() => {
-    // Simulate loading state for demo purposes
-    const timer = setTimeout(() => setLoading(false), 1000) // Simulated delay
-    return () => clearTimeout(timer) // Cleanup on unmount
-  }, [])
-  useEffect(() => {
-    // Save userData to local storage whenever it changes
     try {
-      localStorage.setItem('QuizData', JSON.stringify(QUIZDATA))
+      if (QUIZDATA) {
+        localStorage.setItem('QuizData', JSON.stringify(QUIZDATA))
+      }
     } catch (error) {
-      console.error('Failed to save userData to localStorage:', error)
+      console.error('Failed to save QUIZDATA to localStorage:', error)
     }
   }, [QUIZDATA])
-  //functions
+
+  // Function to handle next question logic
   const handleNextQuestion = (
     NumberOfQuestions: number,
     OPTION: string,
@@ -131,13 +135,11 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     if (currentQuestionIndex < NumberOfQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
-      // Convert the Questions array to a JSON string
       const questionsString = encodeURIComponent(JSON.stringify(Questions))
-      // Result: '%5B%22What%20is%20React%3F%22%2C%22What%20is%20useEffect%3F%22%2C%22Explain%20useState%20hook.%22%5D'
-      // Pass the serialized array as a query parameter in the URL
       Router.push(`/Report?questions=${questionsString}`)
     }
   }
+
   return (
     <UserContext.Provider
       value={{
@@ -162,4 +164,5 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     </UserContext.Provider>
   )
 }
+
 export default ContextProvider
