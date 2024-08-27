@@ -2,34 +2,32 @@
 import AddComment from '@/components/Quiz/AddComment'
 import CommentCard from '@/components/Quiz/CommentCard'
 import DisplayCard from '@/components/Quiz/DisplayCard'
+import CommentLoader from '@/functions/Quiz/commentLoader'
 import { UserContext } from '@/utils/Context'
 import { CommentData } from '@/utils/Quiz'
 import React, { useContext, useEffect } from 'react'
+import { FaRegComments } from 'react-icons/fa' // Import an icon for no comments
 const CommentPage = () => {
-  const { QUIZDATA, setData } = useContext(UserContext)
+  const { QUIZDATA, setData, loading } = useContext(UserContext)
   useEffect(() => {
     // Check if we are in the browser environment
     if (typeof window !== 'undefined') {
       // Retrieve the 'isDataLoaded' flag from localStorage
       const isDataLoaded = localStorage.getItem('isDataLoaded')
-
       // Only fetch data from URL parameters if 'isDataLoaded' is not set
       if (!isDataLoaded) {
         const Query = window.location.search
         const URLParam = new URLSearchParams(Query)
         const Data = URLParam.get('QuizData')
-
         if (Data) {
           const DecodeData = JSON.parse(decodeURIComponent(Data))
           setData(DecodeData)
-
           // Set the 'isDataLoaded' flag to true in localStorage
           localStorage.setItem('isDataLoaded', 'true')
         }
       }
     }
-  }, [])
-
+  }, [setData])
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
       {/* Ensure QUIZDATA is defined before rendering DisplayCard */}
@@ -40,13 +38,23 @@ const CommentPage = () => {
       )}
       <AddComment />
       <div className="space-y-4">
-        {/* Ensure QUIZDATA and comments are defined */}
-        {QUIZDATA?.comments?.map((comment: CommentData) => (
-          <CommentCard comment={comment} key={comment.CommentID} />
-        ))}
+        {loading ? (
+          <CommentLoader />
+        ) : QUIZDATA?.comments?.length ? (
+          QUIZDATA.comments.map((comment: CommentData) => (
+            <CommentCard comment={comment} key={comment.CommentID} />
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg bg-white">
+            <FaRegComments className="text-gray-400 text-3xl mb-2" />
+            <p className="text-gray-600 capitalize">
+              No FeedBack Given yet. Be the first to share your thoughts On the
+              Quiz!
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )
 }
-
 export default CommentPage
