@@ -1,28 +1,43 @@
+import { NewComment } from '@/functions/Quiz/CreatingAComment'
 import { UserContext } from '@/utils/Context'
+import { CommentData, Quiz } from '@/utils/Quiz'
 import React, { useContext, useState } from 'react'
+
 const AddComment = () => {
-  const { QUIZDATA, setData } = useContext(UserContext)
+  const { QUIZDATA, setData, userData } = useContext(UserContext)
   const [newComment, setNewComment] = useState('')
-  const handleAddComment = (e: React.FormEvent) => {
+
+  const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault()
     if (newComment.trim() && QUIZDATA) {
-      const newCommentData = {
-        CommentID: Math.random().toString(36).substring(2, 15), // Generate a random ID for demo purposes
-        Text: newComment,
-        UserName: 'Current User', // Replace with the actual user's name
-        UserImage: '/path/to/user/image', // Replace with the actual user's image URL
-        CreatedAt: Date.now(),
+      try {
+        const Data: CommentData = await NewComment(
+          newComment,
+          userData.email,
+          QUIZDATA.ID,
+          userData.imageUrl,
+          userData.Name
+        )
+
+        setData((prev: Quiz) => ({
+          ...prev,
+          comments: [...(prev.comments || []), Data], // Initialize comments if undefined
+        }))
+
+        setNewComment('') // Clear the comment input field
+      } catch (error) {
+        console.error('Error adding comment:', error)
       }
-      setNewComment('')
     }
   }
+
   return (
-    <form onSubmit={handleAddComment} className=" flex gap-2 items-center mb-4">
+    <form onSubmit={handleAddComment} className="flex gap-2 items-center mb-4">
       <input
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
         placeholder="Give Your FeedBack"
-        className="w-full p-2 border border-gray-300 rounded-xl "
+        className="w-full p-2 border border-gray-300 rounded-xl"
         type="text"
       />
       <button
