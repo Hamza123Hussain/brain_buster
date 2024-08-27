@@ -4,7 +4,8 @@ import { fetchQuizAttempts } from '@/functions/Quiz/GettingUserAttempt'
 import { UserContext } from '@/utils/Context'
 import { UserAttempt } from '@/utils/UserAttempts'
 import React, { useContext, useEffect, useState } from 'react'
-import { FaClipboardList, FaRegFrown } from 'react-icons/fa'
+import Empty from '../Empty'
+import { FaClipboardList } from 'react-icons/fa'
 const AttemptingQuizDetails = () => {
   const { userData, setLoading, loading } = useContext(UserContext)
   const [attemptedQuizzes, setAttemptedQuizzes] = useState<UserAttempt[]>([])
@@ -12,24 +13,36 @@ const AttemptingQuizDetails = () => {
     const GetUserAttempts = async () => {
       setLoading(true)
       try {
-        const data = await fetchQuizAttempts(userData.email)
+        const data: UserAttempt[] = await fetchQuizAttempts(userData.email)
         if (data) {
-          setAttemptedQuizzes(data)
-          setLoading(false)
+          // Sort the data by CreatedAt in descending order
+          const sortedData = data.sort((a, b) => {
+            const dateA = new Date(a.CreatedAt)
+            const dateB = new Date(b.CreatedAt)
+            return dateB.getTime() - dateA.getTime()
+          })
+          setAttemptedQuizzes(sortedData)
         } else {
           console.warn('No attempted quizzes found for the user')
         }
       } catch (error) {
         console.error('Error fetching attempted quizzes:', error)
+      } finally {
         setLoading(false)
       }
     }
     GetUserAttempts()
-  }, [])
+  }, [userData.email, setLoading])
   if (loading) return <Loader />
-
+  const AvgScore =
+    attemptedQuizzes.reduce((acc: number, attempt: UserAttempt) => {
+      return acc + attempt.Score
+    }, 0) / attemptedQuizzes.length
   return (
     <>
+      <div className=" mb-4 text-xl  sm:text-2xl font-extrabold flex justify-center items-center">
+        Avg Score of {userData.Name} : {AvgScore.toFixed(2)}
+      </div>
       {attemptedQuizzes.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mx-auto">
           {attemptedQuizzes.map((attempt) => (
@@ -37,16 +50,17 @@ const AttemptingQuizDetails = () => {
           ))}
         </div>
       ) : (
-        // Updated component with a new icon
-        <div className="flex flex-col justify-center mx-auto items-center min-h-screen">
-          <FaClipboardList size={100} className="text-4xl text-gray-500 mb-4" />
-          <p className="text-center text-lg md:text-4xl text-gray-500">
-            No Quizzes attempted yet.
-          </p>
-        </div>
+        <Empty
+          text=" No Quizzes attempted yet."
+          icon={
+            <FaClipboardList
+              size={100}
+              className="text-4xl text-gray-500 mb-4"
+            />
+          }
+        />
       )}
     </>
   )
 }
-
 export default AttemptingQuizDetails
