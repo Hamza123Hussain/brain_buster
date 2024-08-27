@@ -5,10 +5,11 @@ import React, { useContext } from 'react'
 import UserBtns from './UserBtns'
 const DisplayCard = ({ element }: { element: Quiz }) => {
   const Router = useRouter()
-  const { setscore, setCurrentQuestionIndex } = useContext(UserContext)
+  const { setscore, setCurrentQuestionIndex, setData } = useContext(UserContext)
   const MoveToQuiz = () => {
     setscore(0)
     setCurrentQuestionIndex(0)
+    // setData(undefined)
     Router.push(`/Quiz/${element.ID}`)
   }
   return (
