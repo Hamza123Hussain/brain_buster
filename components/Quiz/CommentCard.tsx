@@ -1,5 +1,6 @@
+import { UserContext } from '@/utils/Context'
 import { CommentData } from '@/utils/Quiz'
-import React from 'react'
+import React, { useContext } from 'react'
 
 const CommentCard = ({ comment }: { comment: CommentData }) => {
   return (
