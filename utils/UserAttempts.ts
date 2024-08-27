@@ -4,6 +4,7 @@ export interface UserAttempt {
   QuizData: QuizData
   UserData: UserData
   Score: number
+  CreatedAt: any
 }
 interface QuizData {
   CreatedBy: string
