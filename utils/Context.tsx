@@ -3,6 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 import { InputValues, UserData } from './SignupInterface'
 import { useRouter } from 'next/navigation'
 import { Questions, Quiz } from './Quiz'
+import { submitUserAttempt } from '@/functions/Quiz/AddingUserAttempts'
 export const UserContext = createContext<any>(null)
 
 const ContextProvider = ({ children }: { children: ReactNode }) => {
@@ -123,11 +124,13 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
   }, [QUIZDATA])
 
   // Function to handle next question logic
-  const handleNextQuestion = (
+  const handleNextQuestion = async (
     NumberOfQuestions: number,
     OPTION: string,
     CorrectAnswer: string,
-    Questions: Questions[]
+    Questions: Questions[],
+    ID: string,
+    score: number
   ) => {
     if (OPTION === CorrectAnswer) {
       setscore((prev: number) => prev + 1)
@@ -136,7 +139,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
       const questionsString = encodeURIComponent(JSON.stringify(Questions))
-      Router.push(`/Report?questions=${questionsString}`)
+      const SubmitData = await submitUserAttempt(userData.email, ID, score)
+      if (SubmitData) Router.push(`/Report?questions=${questionsString}`)
     }
   }
 
