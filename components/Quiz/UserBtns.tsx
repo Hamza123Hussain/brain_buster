@@ -21,12 +21,14 @@ const UserBtns = ({ Quiz_element }: { Quiz_element: Quiz }) => {
   const PathName = usePathname()
   return (
     <div className="flex justify-end items-center">
-      <button
-        onClick={GoToFeedBack}
-        className="text-white border-2 border-gray-200 hover:bg-blue-400 bg-blue-600 px-2 rounded-lg"
-      >
-        View FeedBack
-      </button>
+      {PathName != '/Comment' && (
+        <button
+          onClick={GoToFeedBack}
+          className="text-white border-2 border-gray-200 hover:bg-blue-400 bg-blue-600 px-2 rounded-lg"
+        >
+          View FeedBack
+        </button>
+      )}
       {PathName === '/dashboard' && (
         <button
           onClick={DeleteQuiz} // Only the button click should trigger delete
