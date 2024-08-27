@@ -15,6 +15,8 @@ const UserBtns = ({ Quiz_element }: { Quiz_element: Quiz }) => {
   }
   const GoToFeedBack = async (event: React.MouseEvent) => {
     event.stopPropagation() // Prevents the click from bubbling up to the card
+    // Reset the 'isDataLoaded' flag in localStorage when necessary
+    localStorage.removeItem('isDataLoaded')
     const QuizData = encodeURIComponent(JSON.stringify(Quiz_element))
     Router.push(`/Comment?QuizData=${QuizData}`)
   }
