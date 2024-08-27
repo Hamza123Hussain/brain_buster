@@ -8,7 +8,7 @@ import { fetchAllAiQuiz } from '@/functions/Quiz/GettingALLQuiz'
 import DisplayCard from '@/components/Quiz/DisplayCard'
 import Image from 'next/image'
 export default function Home() {
-  const { userData, loading, setLoading } = useContext(UserContext)
+  const { userData, loading, setLoading, setscore } = useContext(UserContext)
   const [QuizData, SetQuizData] = useState<Quiz[]>([])
   useEffect(() => {
     const GetQuizzes = async () => {
@@ -19,6 +19,7 @@ export default function Home() {
           console.log('API RESPONDED : ', Data)
           SetQuizData(Data)
           setLoading(false)
+          setscore(0)
         }
       } catch (error) {
         console.log('FUNCTION ERROR : ', error)
