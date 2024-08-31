@@ -27,7 +27,7 @@ const AttemptCard = ({ attempt }: { attempt: UserAttempt }) => {
       {/* Attempt information */}
       <div className="flex justify-end items-center">
         <p className="text-gray-300 mb-1">
-          <strong>Score:</strong> {Score} / {NumberOfQuestions}
+          <strong>Score:</strong> {Score ? Score : 0} / {NumberOfQuestions}
         </p>
       </div>
     </div>
