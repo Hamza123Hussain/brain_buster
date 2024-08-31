@@ -8,7 +8,7 @@ const UserQuizzes = () => {
   const Router = useRouter()
 
   return (
-    <div className="flex flex-col px-2 min-h-screen mx-auto">
+    <div className="flex flex-col px-2 min-h-screen ">
       <div className="mx-auto gap-2 my-5">
         <button
           onClick={() => Router.push('/Quiz/AI')}
@@ -19,7 +19,7 @@ const UserQuizzes = () => {
       </div>
 
       {/* Tabs for Created Quizzes and Attempted Quizzes */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex gap-4 mb-6 items-start justify-start">
         <button
           onClick={() => setActiveTab('created')}
           className={`px-4 py-2 rounded-lg ${
