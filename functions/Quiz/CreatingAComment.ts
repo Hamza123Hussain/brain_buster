@@ -1,3 +1,4 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 export const NewComment = async (
   message: string,
@@ -7,16 +8,13 @@ export const NewComment = async (
   UserName: string
 ) => {
   try {
-    const response = await axios.post(
-      'http://localhost:8000/api/AIAsk/NewComment',
-      {
-        message,
-        UserEmail,
-        QUIZID,
-        UserImage,
-        UserName,
-      }
-    )
+    const response = await axios.post(`${APIURL}/api/AIAsk/NewComment`, {
+      message,
+      UserEmail,
+      QUIZID,
+      UserImage,
+      UserName,
+    })
 
     if (response.status === 200) {
       //   console.log(response.data)

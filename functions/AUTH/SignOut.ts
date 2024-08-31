@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const SignOut = async () => {
   try {
-    const Response = await axios.get(`http://localhost:8000/api/Auth/`)
+    const Response = await axios.get(`${APIURL}/api/Auth/`)
     if (Response.status === 200) {
       return Response.data
     }

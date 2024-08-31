@@ -1,3 +1,4 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 
 export const submitUserAttempt = async (
@@ -7,14 +8,11 @@ export const submitUserAttempt = async (
 ) => {
   try {
     // Send a POST request to the backend
-    const response = await axios.post(
-      'http://localhost:8000/api/User/UserAttempts',
-      {
-        UserEmail,
-        QuizID,
-        Score,
-      }
-    )
+    const response = await axios.post(`${APIURL}/api/User/UserAttempts`, {
+      UserEmail,
+      QuizID,
+      Score,
+    })
 
     // Check if the response is successful
     if (response.status === 200) {

@@ -1,3 +1,4 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 
 export const fetchAiQuestions = async (
@@ -9,7 +10,7 @@ export const fetchAiQuestions = async (
 ) => {
   try {
     // Make a POST request to the API endpoint
-    const response = await axios.post('http://localhost:8000/api/AIAsk/', {
+    const response = await axios.post(`${APIURL}/api/AIAsk/`, {
       Topic,
       NumberOfQuestions,
       UserEmail,

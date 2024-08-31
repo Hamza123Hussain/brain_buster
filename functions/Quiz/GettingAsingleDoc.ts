@@ -1,3 +1,4 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 // Function to fetch a document by ID
 export const fetchDocumentByID = async (ID: string) => {
@@ -6,7 +7,7 @@ export const fetchDocumentByID = async (ID: string) => {
       throw new Error('ID is required to fetch the document.')
     }
     // Make a GET request to the API endpoint with the ID as a query parameter
-    const response = await axios.get('http://localhost:8000/api/AIAsk/GetDoc', {
+    const response = await axios.get(`${APIURL}/api/AIAsk/GetDoc`, {
       params: {
         ID,
       },

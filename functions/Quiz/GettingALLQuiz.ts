@@ -1,3 +1,4 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
@@ -11,7 +12,7 @@ export const fetchAllAiQuiz = async (UserID: string) => {
     }
 
     // Make a GET request to your backend API
-    const response = await axios.get('http://localhost:8000/api/AIAsk/GetAll', {
+    const response = await axios.get(`${APIURL}/api/AIAsk/GetAll`, {
       params: { UserID },
     })
 

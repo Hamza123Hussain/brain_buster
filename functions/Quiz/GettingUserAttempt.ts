@@ -1,17 +1,15 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 // Function to fetch quiz attempts
 export const fetchQuizAttempts = async (UserEmail: string) => {
   try {
-    const response = await axios.get(
-      `http://localhost:8000/api/User/GettingAttempts`,
-      {
-        params: {
-          UserEmail,
-        },
-      }
-    )
+    const response = await axios.get(`${APIURL}/api/User/GettingAttempts`, {
+      params: {
+        UserEmail,
+      },
+    })
 
     if (response.status == 200) {
       //   console.log('DATA OF USER ', response.data)

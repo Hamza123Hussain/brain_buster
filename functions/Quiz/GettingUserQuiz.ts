@@ -1,8 +1,9 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 
 export const fetchAiQuestions = async (userEmail: string) => {
   try {
-    const response = await axios.get('http://localhost:8000/api/User/GetQuiz', {
+    const response = await axios.get(`${APIURL}/api/User/GetQuiz`, {
       params: { UserEmail: userEmail },
     })
 

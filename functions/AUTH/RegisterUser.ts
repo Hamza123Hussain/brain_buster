@@ -21,10 +21,7 @@ export const RegisterUser = async (
     }
 
     // Send the POST request with FormData
-    const response = await axios.post<UserData>(
-      `http://localhost:8000/api/Auth/`,
-      formData
-    )
+    const response = await axios.post<UserData>(`${APIURL}/api/Auth/`, formData)
 
     if (response.status === 201) {
       console.log('API HAS RESPONDED ', response.data)

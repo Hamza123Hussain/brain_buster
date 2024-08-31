@@ -1,13 +1,11 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 export const deleteComment = async (commentId: string, quizId: string) => {
   try {
     // Send a DELETE request to the API endpoint
-    const response = await axios.delete(
-      'http://localhost:8000/api/AIAsk/DeleteComment',
-      {
-        params: { CommentID: commentId, QUIZID: quizId },
-      }
-    )
+    const response = await axios.delete(`${APIURL}/api/AIAsk/DeleteComment`, {
+      params: { CommentID: commentId, QUIZID: quizId },
+    })
     if (response.status === 200) {
       // Successfully deleted
       return true

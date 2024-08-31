@@ -18,10 +18,7 @@ const updateUserProfile = async (
     }
 
     // Send the form data to the backend API
-    const response = await axios.put(
-      `http://localhost:8000/api/User/UpdateUser`,
-      formData
-    )
+    const response = await axios.put(`${APIURL}/api/User/UpdateUser`, formData)
 
     // Check the response and return the result
     if (response.status === 200) {

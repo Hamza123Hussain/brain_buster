@@ -1,15 +1,13 @@
+import { APIURL } from '@/utils/SignupInterface'
 import axios from 'axios'
 export const deletequiz = async (UserID: string, RandomID: string) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:8000/api/User/DeleteQuiz`,
-      {
-        params: {
-          UserID,
-          RandomID,
-        },
-      }
-    )
+    const response = await axios.delete(`${APIURL}/api/User/DeleteQuiz`, {
+      params: {
+        UserID,
+        RandomID,
+      },
+    })
     if (response.status === 200) {
       return true
     } else {

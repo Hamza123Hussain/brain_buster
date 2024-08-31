@@ -11,4 +11,4 @@ export interface UserData {
   imageUrl: string
 }
 
-export const APIURL = 'https://blog-ai-backend.vercel.app'
+export const APIURL = 'https://brain-buster-back-end.vercel.app'
