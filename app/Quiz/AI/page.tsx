@@ -44,7 +44,7 @@ const WriteWithAI = () => {
 
   return (
     <div className="flex flex-col items-center bg-gray-900 p-8 rounded-lg shadow-lg max-w-3xl mx-auto my-10">
-      <h1 className="text-lg font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-500">
+      <h1 className="text-lg sm:text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-500">
         Create a New Quiz With AI
       </h1>
       <div className="w-full space-y-6">
