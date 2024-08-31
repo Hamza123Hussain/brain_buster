@@ -45,15 +45,18 @@ const AttemptingQuizDetails = () => {
 
   return (
     <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg">
-      <div className="mb-4 text-xl sm:text-2xl font-extrabold text-green-400 flex justify-center items-center">
-        Avg Score of {userData.Name}: {AvgScore.toFixed(2)}
-      </div>
       {attemptedQuizzes.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mx-auto">
-          {attemptedQuizzes.map((attempt) => (
-            <AttemptCard attempt={attempt} key={attempt.AttemptID} />
-          ))}
-        </div>
+        <>
+          {' '}
+          <div className="mb-4 text-xl sm:text-2xl font-extrabold text-green-400 flex justify-center items-center">
+            Avg Score of {userData.Name}: {AvgScore.toFixed(2)}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto">
+            {attemptedQuizzes.map((attempt) => (
+              <AttemptCard attempt={attempt} key={attempt.AttemptID} />
+            ))}
+          </div>
+        </>
       ) : (
         <Empty
           text="No Quizzes attempted yet."
