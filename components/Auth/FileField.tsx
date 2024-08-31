@@ -8,10 +8,10 @@ const FileField = ({
   Text: string
 }) => {
   return (
-    <div className="bg-transparent   shadow-black border-2 p-4 rounded-lg ">
+    <div className="bg-transparent border-2 border-[#BDBDBD] p-4 rounded-lg">
       <label
         htmlFor="profile-image"
-        className="block text-gray-100 text-lg font-semibold mb-2"
+        className="block text-[#F2F2F2] text-sm sm:text-base md:text-lg font-semibold mb-2"
       >
         {Text}
       </label>
@@ -21,7 +21,7 @@ const FileField = ({
         name="Image"
         onChange={onChange}
         accept=".jpg,.jpeg,.png,.webp" // Restrict file types
-        className="block w-full text-xs text-gray-500 file:cursor-pointer file:bg-blue-500 file:text-white file:py-2 file:px-4 file:rounded-lg file:border-0 hover:file:bg-blue-600"
+        className="block w-full text-xs sm:text-sm text-[#BDBDBD] file:cursor-pointer file:bg-[#009688] file:text-white file:py-2 file:px-4 file:rounded-lg file:border-0 hover:file:bg-[#00796B] transition-colors duration-300"
       />
     </div>
   )

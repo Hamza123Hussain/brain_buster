@@ -6,9 +6,11 @@ import Loader from '../Loader'
 import DisplayCard from './DisplayCard'
 import Empty from '../Empty'
 import { FaRegFrown } from 'react-icons/fa'
+
 const CreatedQuizzes = () => {
   const { userData, setLoading, loading } = useContext(UserContext)
   const [UserQUIZ, setQUIZ] = useState<Quiz[]>([])
+
   useEffect(() => {
     const GetUserQUIZ = async () => {
       if (!userData.email) {
@@ -41,10 +43,11 @@ const CreatedQuizzes = () => {
   if (loading) {
     return <Loader />
   }
+
   return (
     <>
       {UserQUIZ.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto p-4">
           {UserQUIZ.map((element) => (
             <DisplayCard key={element.ID} element={element} />
           ))}
@@ -52,12 +55,11 @@ const CreatedQuizzes = () => {
       ) : (
         <Empty
           text="No Quizzes created yet."
-          icon={
-            <FaRegFrown size={100} className="text-4xl text-gray-500 mb-4" />
-          }
+          icon={<FaRegFrown size={100} className="text-gray-400 mb-4" />}
         />
       )}
     </>
   )
 }
+
 export default CreatedQuizzes

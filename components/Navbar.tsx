@@ -12,14 +12,13 @@ const Navbar = () => {
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    // This ensures that `isClient` is only true on the client side
     setIsClient(true)
   }, [])
 
   if (!isClient) return null
 
   return (
-    <div className="bg-blue-200 px-2 flex justify-between items-center">
+    <div className="bg-gray-900 border-b-2 border-slate-600 px-4 py-2 flex justify-between items-center">
       <Link href={'/'}>
         <div className="flex items-center gap-2 cursor-pointer">
           <Image
@@ -29,7 +28,9 @@ const Navbar = () => {
             height={40}
             className="rounded-full"
           />
-          <h3 className="text-xs sm:text-base text-white">Brain Buster</h3>
+          <h3 className="text-xs sm:text-lg md:text-xl text-[#F5F5F5]">
+            Brain Buster
+          </h3>
         </div>
       </Link>
       {userData ? (
@@ -38,7 +39,7 @@ const Navbar = () => {
         <></>
         // <button
         //   onClick={() => Router.push('/Login')}
-        //   className="bg-green-300 px-7 border-white hover:bg-white hover:text-black text-white rounded-lg"
+        //   className="bg-[#4CAF50] px-7 border-[#FFFFFF] hover:bg-[#FFFFFF] hover:text-[#1C1C1C] text-[#FFFFFF] rounded-lg"
         // >
         //   Login
         // </button>

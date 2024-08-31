@@ -2,6 +2,7 @@ import { NewComment } from '@/functions/Quiz/CreatingAComment'
 import { UserContext } from '@/utils/Context'
 import { CommentData, Quiz } from '@/utils/Quiz'
 import React, { useContext, useState } from 'react'
+
 const AddComment = () => {
   const { QUIZDATA, setData, userData, setLoading } = useContext(UserContext)
   const [newComment, setNewComment] = useState('')
@@ -30,22 +31,24 @@ const AddComment = () => {
       }
     }
   }
+
   return (
     <form onSubmit={handleAddComment} className="flex gap-2 items-center mb-4">
       <input
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
-        placeholder="Give Your FeedBack"
-        className="w-full p-2 border border-gray-300 rounded-xl"
+        placeholder="Give your feedback"
+        className="w-full p-2 border border-gray-700 bg-gray-800 text-white rounded-xl"
         type="text"
       />
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition duration-300"
+        className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition duration-300"
       >
         Submit
       </button>
     </form>
   )
 }
+
 export default AddComment

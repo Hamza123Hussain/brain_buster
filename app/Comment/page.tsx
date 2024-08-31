@@ -7,8 +7,10 @@ import { UserContext } from '@/utils/Context'
 import { CommentData } from '@/utils/Quiz'
 import React, { useContext, useEffect } from 'react'
 import { FaRegComments } from 'react-icons/fa' // Import an icon for no comments
+
 const CommentPage = () => {
   const { QUIZDATA, setData, loading } = useContext(UserContext)
+
   useEffect(() => {
     // Check if we are in the browser environment
     if (typeof window !== 'undefined') {
@@ -28,8 +30,9 @@ const CommentPage = () => {
       }
     }
   }, [setData])
+
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
+    <div className="max-w-4xl mx-auto py-8 px-4 bg-gray-900 text-white">
       {/* Ensure QUIZDATA is defined before rendering DisplayCard */}
       {QUIZDATA && (
         <div className="mb-8">
@@ -45,11 +48,11 @@ const CommentPage = () => {
             <CommentCard comment={comment} key={comment.CommentID} />
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg bg-white">
-            <FaRegComments className="text-gray-400 text-3xl mb-2" />
-            <p className="text-gray-600 capitalize">
-              No FeedBack Given yet. Be the first to share your thoughts On the
-              Quiz!
+          <div className="flex flex-col items-center justify-center p-4 border border-gray-700 rounded-lg bg-gray-800">
+            <FaRegComments className="text-gray-500 text-3xl mb-2" />
+            <p className="text-gray-400 capitalize">
+              No feedback given yet. Be the first to share your thoughts on the
+              quiz!
             </p>
           </div>
         )}
@@ -57,4 +60,5 @@ const CommentPage = () => {
     </div>
   )
 }
+
 export default CommentPage

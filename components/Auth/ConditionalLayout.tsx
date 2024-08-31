@@ -4,7 +4,6 @@ import { UserContext } from '@/utils/Context'
 import LandingPage from '../LandingPage'
 import { Toaster } from 'react-hot-toast'
 import { usePathname } from 'next/navigation'
-import Login from '@/app/Login/page'
 
 const ConditionalLayout = ({ children }: { children: ReactNode }) => {
   const { userData } = useContext(UserContext)
@@ -16,7 +15,7 @@ const ConditionalLayout = ({ children }: { children: ReactNode }) => {
     setIsClient(true)
   }, [])
 
-  // Check if the current route is login or signup
+  // Check if the current route is login, signup, or forgot password
   const isAuthPage =
     pathname === '/Login' ||
     pathname === '/Signup' ||
@@ -30,12 +29,12 @@ const ConditionalLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       {isAuthPage || userData ? (
-        <main className="flex-grow flex">
+        <main className="flex flex-col min-h-screen bg-gray-900 text-white">
           {children}
           <Toaster />
         </main>
       ) : (
-        <div className=" flex flex-col">
+        <div className="flex flex-col min-h-screen bg-gray-900 text-white">
           <LandingPage />
         </div>
       )}

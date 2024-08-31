@@ -7,6 +7,7 @@ import { QuizCreate } from '@/utils/QuizCreate'
 import { fetchAiQuestions } from '@/functions/Quiz/CreateAQuiz'
 import Loader from '@/components/Loader'
 import CreateQuizFields from '@/components/Quiz/CreateQuizFields'
+
 const WriteWithAI = () => {
   const Router = useRouter()
   const { userData, setLoading, loading } = useContext(UserContext)
@@ -16,6 +17,7 @@ const WriteWithAI = () => {
     DifficultyLevel: '',
     NumberOfQuestion: 3,
   })
+
   const handleFetchQuestions = async () => {
     setLoading(true)
     try {
@@ -37,18 +39,20 @@ const WriteWithAI = () => {
       setLoading(false)
     }
   }
+
   if (loading) return <Loader />
+
   return (
-    <div className="flex flex-col items-center bg-gray-100 p-8 rounded-lg shadow-lg max-w-3xl mx-auto my-10">
-      <h1 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to from-orange-800  to-gray-300">
-        Create a New Blog With AI
+    <div className="flex flex-col items-center bg-gray-900 p-8 rounded-lg shadow-lg max-w-3xl mx-auto my-10">
+      <h1 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-500">
+        Create a New Quiz With AI
       </h1>
       <div className="w-full space-y-6">
         <CreateQuizFields CreateValue={CreateValue} SetValue={SetValue} />
-        <div className=" flex gap-2">
+        <div className="flex gap-2">
           <button
             onClick={handleFetchQuestions}
-            className="w-full bg-customBg text-white py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-dusty-rose"
+            className="w-full bg-green-500 text-white py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
           >
             Submit
           </button>

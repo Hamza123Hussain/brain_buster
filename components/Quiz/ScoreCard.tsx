@@ -1,6 +1,7 @@
 import { UserContext } from '@/utils/Context'
 import React, { useContext } from 'react'
 import { FaFrown, FaMeh, FaSmile } from 'react-icons/fa'
+
 const ScoreCard = () => {
   const { score, total } = useContext(UserContext)
   // Calculate percentage score
@@ -18,11 +19,11 @@ const ScoreCard = () => {
   }
 
   return (
-    <div className="text-center mb-4">
+    <div className="bg-gray-800 text-gray-200 p-6 rounded-lg shadow-md mb-4">
       <p className="text-xl font-semibold mb-2">
         Your Score: {score} / {total}
       </p>
-      <div className=" flex justify-center items-center"> {icon}</div>
+      <div className="flex justify-center items-center mb-2">{icon}</div>
     </div>
   )
 }
