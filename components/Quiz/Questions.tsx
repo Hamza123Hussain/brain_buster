@@ -13,19 +13,27 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
   })
 
   return (
-    <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+    <div className="text-white">
       {quiz.Questions &&
         quiz.Questions.map(
           (question, index) =>
             currentQuestionIndex === index && (
-              <div key={index} className="mb-6 text-white">
-                <h3 className="font-semibold mb-2">
+              <div
+                onClick={() => {
+                  setSelectedOption((prev: Question) => ({
+                    ...prev,
+                    Correct: question.Correct_Answer,
+                  }))
+                }}
+                key={index}
+                className="mb-6"
+              >
+                <h3 className="font-semibold mb-5 text-sm md:text-xl">
                   Q{index + 1}: {question.Question}
                 </h3>
-                <ul className="list-disc pl-5">
+                <ul className="list-disc pl-5 text-sm  space-y-2">
                   {question.Options.map((option: any, idx: any) => (
                     <li
-                      key={idx}
                       onClick={() =>
                         setSelectedOption((prev: any) => ({
                           ...prev,
@@ -33,10 +41,11 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
                           INDEX: idx,
                         }))
                       }
-                      className={`mb-1 rounded-lg cursor-pointer px-2 ${
+                      key={idx}
+                      className={`mb-1 rounded-lg cursor-pointer px-4 py-2 ${
                         idx === selectedOption.INDEX
-                          ? 'text-green-400 bg-gray-900'
-                          : 'text-gray-300 hover:bg-gray-700'
+                          ? 'bg-green-500 text-white'
+                          : 'bg-gray-700 hover:bg-gray-600'
                       }`}
                     >
                       {option}
@@ -60,9 +69,7 @@ const Questions = ({ quiz }: { quiz: Quiz }) => {
             )
             setSelectedOption((prev: any) => ({ ...prev, INDEX: -1 }))
           }}
-          className={`bg-green-500 px-4 text-white border-2 border-green-600 rounded-lg ${
-            selectedOption.INDEX === -1 ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
+          className="bg-purple-500 px-6 py-2 text-white rounded-lg hover:bg-purple-600 disabled:bg-gray-600"
         >
           {currentQuestionIndex === quiz.NumberOfQuestions - 1
             ? 'Finish'
