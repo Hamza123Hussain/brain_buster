@@ -4,6 +4,7 @@ import { InputValues, UserData } from './SignupInterface'
 import { useRouter } from 'next/navigation'
 import { Questions, Quiz } from './Quiz'
 import { submitUserAttempt } from '@/functions/Quiz/AddingUserAttempts'
+import { Question } from './QuestionsInterface'
 export const UserContext = createContext<any>(null)
 
 const ContextProvider = ({ children }: { children: ReactNode }) => {
@@ -124,26 +125,53 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
   }, [QUIZDATA])
 
   // Function to handle next question logic
+  // Function to handle next question logic
   const handleNextQuestion = async (
     NumberOfQuestions: number,
     OPTION: string,
     CorrectAnswer: string,
-    Questions: Questions[],
-    ID: string,
-    score: number
+    Questions: Question[],
+    ID: string
   ) => {
+    // Debug: Log the selected option and correct answer
+    console.log('Selected Option:', OPTION)
+    console.log('Correct Answer:', CorrectAnswer)
+
+    let newScore = score // Local variable to track score
+
+    // Increment score if the selected option is correct
     if (OPTION === CorrectAnswer) {
-      setscore((prev: number) => prev + 1)
+      newScore += 1
+      setscore(newScore)
+      // Debug: Log the score increment
+      console.log('Score incremented. New Score:', newScore)
     }
+
+    // Move to the next question or submit the attempt if it's the last question
     if (currentQuestionIndex < NumberOfQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
     } else {
-      const questionsString = encodeURIComponent(JSON.stringify(Questions))
-      const SubmitData = await submitUserAttempt(userData.email, ID, score)
-      if (SubmitData) Router.push(`/Report?questions=${questionsString}`)
+      try {
+        const questionsString = encodeURIComponent(JSON.stringify(Questions))
+        // Debug: Log the score before submission
+        console.log('Final Score:', newScore)
+
+        // Submit the user's attempt with the final score
+        const submitData = await submitUserAttempt(
+          userData.email,
+          ID,
+          newScore ? newScore : 0
+        )
+
+        if (submitData) {
+          Router.push(`/Report?questions=${questionsString}`)
+        }
+      } catch (error) {
+        console.error('Error submitting user attempt:', error)
+        // Handle error scenario here (e.g., show an error message to the user)
+      }
     }
   }
-
   return (
     <UserContext.Provider
       value={{
