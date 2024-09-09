@@ -16,7 +16,7 @@ export default function Home() {
     const GetQuizzes = async () => {
       setLoading(true)
       try {
-        const Data = await fetchAllAiQuiz(userData.email)
+        const Data = await fetchAllAiQuiz()
         if (Data) {
           SetQuizData(Data)
           setLoading(false)

@@ -36,13 +36,14 @@ const Navbar = () => {
       {userData ? (
         <ShowingUser User={userData} />
       ) : (
-        <></>
-        // <button
-        //   onClick={() => Router.push('/Login')}
-        //   className="bg-[#4CAF50] px-7 border-[#FFFFFF] hover:bg-[#FFFFFF] hover:text-[#1C1C1C] text-[#FFFFFF] rounded-lg"
-        // >
-        //   Login
-        // </button>
+        <>
+          <button
+            onClick={() => Router.push('/Login')}
+            className="bg-[#4CAF50] px-7 border-[#FFFFFF] hover:bg-[#FFFFFF] hover:text-[#1C1C1C] text-[#FFFFFF] rounded-lg"
+          >
+            Login
+          </button>
+        </>
       )}
     </div>
   )

@@ -5,12 +5,13 @@ import DisplayCard from '@/components/Quiz/DisplayCard'
 import CommentLoader from '@/functions/Quiz/commentLoader'
 import { UserContext } from '@/utils/Context'
 import { CommentData } from '@/utils/Quiz'
+import { useRouter } from 'next/navigation'
 import React, { useContext, useEffect } from 'react'
 import { FaRegComments } from 'react-icons/fa' // Import an icon for no comments
 
 const CommentPage = () => {
-  const { QUIZDATA, setData, loading } = useContext(UserContext)
-
+  const { QUIZDATA, setData, userData, loading } = useContext(UserContext)
+  const Router = useRouter()
   useEffect(() => {
     // Check if we are in the browser environment
     if (typeof window !== 'undefined') {
@@ -39,7 +40,18 @@ const CommentPage = () => {
           <DisplayCard element={QUIZDATA} />
         </div>
       )}
-      <AddComment />
+      {userData ? (
+        <AddComment />
+      ) : (
+        <div className=" flex justify-center items-center mb-4 w-full">
+          <button
+            onClick={() => Router.push('/Login')}
+            className="bg-[#4CAF50] px-7 py-2 border-[#FFFFFF] hover:bg-[#FFFFFF] hover:text-[#1C1C1C] text-[#FFFFFF] rounded-lg"
+          >
+            Login To Add A Comment
+          </button>
+        </div>
+      )}
       <div className="space-y-4">
         {loading ? (
           <CommentLoader />

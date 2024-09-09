@@ -3,18 +3,12 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 
 // Function to fetch all AI questions
-export const fetchAllAiQuiz = async (UserID: string) => {
+export const fetchAllAiQuiz = async () => {
   try {
     // Check if UserID is provided
-    if (!UserID) {
-      toast.error('User ID is required')
-      return
-    }
 
     // Make a GET request to your backend API
-    const response = await axios.get(`${APIURL}/api/AIAsk/GetAll`, {
-      params: { UserID },
-    })
+    const response = await axios.get(`${APIURL}/api/AIAsk/GetAll`)
 
     // Check if the response is successful
     if (response.status === 200) {
